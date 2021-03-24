@@ -4,6 +4,8 @@ LABEL io.hass.version="0.37.2" io.hass.type="addon" io.hass.arch="armhf|aarch64|
 
 COPY options.sh /options.sh
 
+RUN ["chmod", "+x", "/options.sh"]
+
 RUN apt-get clean \
 
         && apt-get update \
