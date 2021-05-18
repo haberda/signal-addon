@@ -18,10 +18,12 @@
     "8080/tcp": 8080
   },
   "options": {
-    "native_mode": 0
+    "native_mode": 0,
+    "AUTO_RECEIVE": 1
   },
   "schema": {
-    "native_mode": "int"
+    "native_mode": "int",
+    "AUTO_RECEIVE": "int"
   },
   "environment": {
     "SIGNAL_CLI_CONFIG_DIR": "/data"
