@@ -1,6 +1,6 @@
-FROM bbernhard/signal-cli-rest-api:0.37
+FROM bbernhard/signal-cli-rest-api:0.38
 
-LABEL io.hass.version="0.37.2" io.hass.type="addon" io.hass.arch="armhf|aarch64|amd64"
+LABEL io.hass.version="0.38" io.hass.type="addon" io.hass.arch="armhf|aarch64|amd64"
 
 COPY options.sh /options.sh
 
