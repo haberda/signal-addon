@@ -67,14 +67,14 @@ jobs:
           shopt -s globstar
           cat **/*.json | jq '.'
 
-  lint-markdown:
-    name: MarkdownLint
-    runs-on: ubuntu-latest
-    steps:
-      - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v2.3.4
-      - name: 🚀 Run mdl
-        uses: actionshub/markdownlint@2.0.2
+#  lint-markdown:
+#    name: MarkdownLint
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: ⤵️ Check out code from GitHub
+#        uses: actions/checkout@v2.3.4
+#      - name: 🚀 Run mdl
+#        uses: actionshub/markdownlint@2.0.2
 
 #  lint-shellcheck:
 #    name: Shellcheck
@@ -116,7 +116,7 @@ jobs:
       - lint-addon
       #- lint-hadolint
       - lint-json
-      - lint-markdown
+      #- lint-markdown
       #- lint-prettier
       #- lint-shellcheck
       #- lint-yamllint
