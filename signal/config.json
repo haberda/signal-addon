@@ -1,6 +1,6 @@
 {
   "name": "Signal Messenger",
-  "url": "https://github.com/haberda/hassio_addons/tree/master/signal",
+  "url": "https://github.com/haberda/signal-addon/tree/master/",
   "version": "dev",
   "slug": "signal_messenger",
   "arch": [
