@@ -16,7 +16,7 @@ Instructions for use can be found in the official [docs](https://www.home-assist
 
 ## Options
 
-### Use Native: `native_mode` DEPRICATED BY UPSTREAM WILL BE REMOVED SOON!!!
+### Use Native: `native_mode` DEPRICATED BY UPSTREAM, REMOVED!!!
 
 This option sets an environment variable in the add-on to use a pre-compiled binary to send messages rather than using the Java application. This reduces the send time from ~15 seconds to ~5 seconds. More information can be found [here](https://github.com/bbernhard/signal-cli-rest-api#native-image-experimental).
 

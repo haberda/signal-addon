@@ -3,7 +3,7 @@ set -e
 
 CONFIG_PATH=/data/options.json
 
-export USE_NATIVE=$(jq --raw-output '.native_mode // empty' $CONFIG_PATH)
+#export USE_NATIVE=$(jq --raw-output '.native_mode // empty' $CONFIG_PATH)
 
 export MODE=$(jq --raw-output '.mode // empty' $CONFIG_PATH)
 

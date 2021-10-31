@@ -18,13 +18,11 @@
     "8080/tcp": "Rest-api port"
   },
   "options": {
-    "native_mode": 0,
     "mode": "normal",
     "AUTO_RECEIVE": 1,
     "SIGNAL_CLI_CMD_TIMEOUT": 60
   },
   "schema": {
-    "native_mode": "int",
     "mode": "str",
     "AUTO_RECEIVE": "int",
     "SIGNAL_CLI_CMD_TIMEOUT": "int"
