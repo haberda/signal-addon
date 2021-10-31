@@ -5,6 +5,8 @@ CONFIG_PATH=/data/options.json
 
 export USE_NATIVE=$(jq --raw-output '.native_mode // empty' $CONFIG_PATH)
 
+export MODE=$(jq --raw-output '.mode // empty' $CONFIG_PATH)
+
 export AUTO_RECEIVE_SCHEDULE_bool=$(jq --raw-output '.AUTO_RECEIVE // empty' $CONFIG_PATH)
 
 export SIGNAL_CLI_CMD_TIMEOUT=$(jq --raw-output '.SIGNAL_CLI_CMD_TIMEOUT // empty' $CONFIG_PATH)
@@ -16,6 +18,8 @@ fi
 
 echo "Native mode:"
 echo "${USE_NATIVE}"
+echo "Mode:"
+echo "${MODE}"
 echo "AUTO RECEIVE SCHEDULE:"
 echo "${AUTO_RECEIVE_SCHEDULE}"
 echo "Signal-cli command timeout:"

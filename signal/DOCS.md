@@ -16,7 +16,7 @@ Instructions for use can be found in the official [docs](https://www.home-assist
 
 ## Options
 
-### Use Native: `native_mode`
+### Use Native: `native_mode` DEPRICATED BY UPSTREAM WILL BE REMOVED SOON!!!
 
 This option sets an environment variable in the add-on to use a pre-compiled binary to send messages rather than using the Java application. This reduces the send time from ~15 seconds to ~5 seconds. More information can be found [here](https://github.com/bbernhard/signal-cli-rest-api#native-image-experimental).
 
@@ -26,6 +26,16 @@ Valid options:
 - `1`: Enable Native mode
 
 This currently only works with a 64 bit OS on amd64. arm64 platforms (e.g. Pi4 with 64bit OS) will fail to send messages when this is enabled, and armv7 (e.g. Pi3 with 32bit OS) platforms will ignore this option.
+
+### Mode
+
+This option allows you to set the MODE environment variable. This replaces the Use Native variable and adds an additional mode.
+
+Valid options:
+
+- 'normal': Every REST API request invokes the signal-cli JAVA application (slowest mode)
+- 'native': Every REST API request invokes a compiled native image (faster than the normal mode) (same as native_mode=1)
+- 'json-rpc': The signal-cli JAVA application is started once and the REST API wrapper communicates via JSON-RPC with it (slow startup time, but once the Java application is running, it should be the fastest)
 
 ### Auto receive
 
