@@ -14,7 +14,7 @@ export reset_data=$(jq --raw-output '.reset_data // empty' $CONFIG_PATH)
 if [ $reset_data ]
 then
 	rm -r /data/*
-	echo "Data deleted. Please restart the addon."
+	echo "Data deleted. Please set reset_data to off and restart the addon."
 	exit
 fi
 
@@ -23,7 +23,7 @@ echo "${MODE}"
 
 if [ $MODE != "json-rpc" ]
 then
-	if [ $AUTO_RECEIVE_SCHEDULE_bool == '1' ]
+	if [ $AUTO_RECEIVE_SCHEDULE_bool ]
 	then
 	  export AUTO_RECEIVE_SCHEDULE="0 22 * * *"
 	fi

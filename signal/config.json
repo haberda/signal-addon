@@ -18,13 +18,13 @@
     "8080/tcp": "Rest-api port"
   },
   "options": {
-    "mode": "normal",
-    "AUTO_RECEIVE": 1,
+    "mode": "list(normal|native|json-rcp)",
+    "AUTO_RECEIVE": "true",
     "SIGNAL_CLI_CMD_TIMEOUT": 60
   },
   "schema": {
-    "mode": "str",
-    "AUTO_RECEIVE": "int",
+    "mode": "list(normal|native|json-rcp)",
+    "AUTO_RECEIVE": "bool",
     "SIGNAL_CLI_CMD_TIMEOUT": "int",
     "reset_data": "bool?"
   },
