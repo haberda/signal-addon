@@ -25,7 +25,8 @@
   "schema": {
     "mode": "str",
     "AUTO_RECEIVE": "int",
-    "SIGNAL_CLI_CMD_TIMEOUT": "int"
+    "SIGNAL_CLI_CMD_TIMEOUT": "int",
+	"reset_data": "bool?"
   },
   "environment": {
     "SIGNAL_CLI_CONFIG_DIR": "/data"
