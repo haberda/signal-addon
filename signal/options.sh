@@ -13,7 +13,9 @@ export reset_data=$(jq --raw-output '.reset_data // empty' $CONFIG_PATH)
 
 if [ $reset_data ]
 then
-	rm -r /data/*
+	rm -r /data/data/
+	rm jsonrpc2.yml
+	jq 'del(.reset_data)'
 fi
 
 if [ $MODE -ne "json-rpc" ]
