@@ -18,9 +18,11 @@ then
 	exit
 fi
 
-if [ $MODE -ne "json-rpc" ]
-then
+echo "Mode:"
+echo "${MODE}"
 
+if [ $MODE != "json-rpc" ]
+then
 	if [ $AUTO_RECEIVE_SCHEDULE_bool == '1' ]
 	then
 	  export AUTO_RECEIVE_SCHEDULE="0 22 * * *"
@@ -30,12 +32,6 @@ then
 	then
 	  export SIGNAL_CLI_CMD_TIMEOUT=$SIGNAL_CLI_CMD_TIMEOUT_tmp
 	fi
-fi
-
-echo "Mode:"
-echo "${MODE}"
-if [ $MODE -ne "json-rpc" ]
-then
 	echo "AUTO RECEIVE SCHEDULE:"
 	echo "${AUTO_RECEIVE_SCHEDULE}"
 	echo "Signal-cli command timeout:"
