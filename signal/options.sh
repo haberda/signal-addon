@@ -13,8 +13,9 @@ export reset_data=$(jq --raw-output '.reset_data // empty' $CONFIG_PATH)
 
 if [ $reset_data ]
 then
-	rm -r /data/data/
-	jq 'del(.reset_data)'
+	rm -r /data/*
+	echo "Data deleted. Please restart the addon."
+	exit
 fi
 
 if [ $MODE -ne "json-rpc" ]
