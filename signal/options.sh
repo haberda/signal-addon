@@ -27,17 +27,17 @@ if [ "${MODE}" != "json-rcp" ]; then
 	if [ $AUTO_RECEIVE_SCHEDULE_bool ]
 	then
 	  export AUTO_RECEIVE_SCHEDULE="0 22 * * *"
-      echo "AUTO RECEIVE SCHEDULE:"
-      echo "${AUTO_RECEIVE_SCHEDULE}"
+          echo "AUTO RECEIVE SCHEDULE:"
+          echo "${AUTO_RECEIVE_SCHEDULE}"
 	fi
 
 	if [ $SIGNAL_CLI_CMD_TIMEOUT_tmp -ne 0 ]
 	then
 	  export SIGNAL_CLI_CMD_TIMEOUT=$SIGNAL_CLI_CMD_TIMEOUT_tmp
 	  echo "Signal-cli command timeout:"
-      echo "$SIGNAL_CLI_CMD_TIMEOUT"
+          echo "$SIGNAL_CLI_CMD_TIMEOUT"
 	fi
-	echo "test json"
+
 fi
 
 sh /entrypoint.sh
