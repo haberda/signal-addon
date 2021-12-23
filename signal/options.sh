@@ -22,8 +22,8 @@ echo "Mode:"
 echo "${MODE_tmp}"
 export MODE="${MODE_tmp}"
 
-if [ "${MODE}" != "json-rpc" ]
-then
+if [ "${MODE}" != "json-rcp" ]; then
+
 	if [ $AUTO_RECEIVE_SCHEDULE_bool ]
 	then
 	  export AUTO_RECEIVE_SCHEDULE="0 22 * * *"
