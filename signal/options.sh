@@ -18,8 +18,6 @@ then
 	exit
 fi
 
-#echo "Mode:"
-#echo "${MODE_tmp}"
 echo "export MODE=$(jq --raw-output '.mode // empty' $CONFIG_PATH)" >> /etc/bash.bashrc
 
 if [ "${MODE_tmp}" != "json-rcp" ]; then
@@ -27,19 +25,16 @@ if [ "${MODE_tmp}" != "json-rcp" ]; then
 	if [ $AUTO_RECEIVE_SCHEDULE_bool ]
 	then
 	  echo "export AUTO_RECEIVE_SCHEDULE='0 22 * * *'" >> /etc/bash.bashrc
-#      echo "AUTO RECEIVE SCHEDULE:"
-#      echo "${AUTO_RECEIVE_SCHEDULE}"
 	fi
 
 	if [ $SIGNAL_CLI_CMD_TIMEOUT_tmp -ne 0 ]
 	then
 	  echo "export SIGNAL_CLI_CMD_TIMEOUT=$(jq --raw-output '.SIGNAL_CLI_CMD_TIMEOUT // empty' $CONFIG_PATH)" >> /etc/bash.bashrc
-#	  echo "Signal-cli command timeout:"
-#     echo "$SIGNAL_CLI_CMD_TIMEOUT"
 	fi
 
 fi
 
-#source /etc/environment
+
+bash /etc/bash.bashrc
 
 sh /entrypoint.sh
