@@ -35,6 +35,6 @@ if [ "${MODE_tmp}" != "json-rcp" ]; then
 fi
 
 
-bash /etc/bash.bashrc
+source /etc/bash.bashrc
 
 sh /entrypoint.sh
