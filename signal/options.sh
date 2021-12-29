@@ -37,7 +37,7 @@ if [ "${MODE_tmp}" != "json-rcp" ]; then
 #	  echo "Signal-cli command timeout:"
 #     echo "$SIGNAL_CLI_CMD_TIMEOUT"
 	fi
-	echo "test json"
+
 fi
 
 source /etc/environment
