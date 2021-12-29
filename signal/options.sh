@@ -18,26 +18,28 @@ then
 	exit
 fi
 
-echo "Mode:"
-echo "${MODE_tmp}"
-export MODE="${MODE_tmp}"
+#echo "Mode:"
+#echo "${MODE_tmp}"
+echo "export MODE=$(jq --raw-output '.mode // empty' $CONFIG_PATH)" >> /etc/environment
 
-if [ "${MODE}" != "json-rcp" ]; then
+if [ "${MODE_tmp}" != "json-rcp" ]; then
 
 	if [ $AUTO_RECEIVE_SCHEDULE_bool ]
 	then
-	  export AUTO_RECEIVE_SCHEDULE="0 22 * * *"
-      echo "AUTO RECEIVE SCHEDULE:"
-      echo "${AUTO_RECEIVE_SCHEDULE}"
+	  echo "export AUTO_RECEIVE_SCHEDULE='0 22 * * *'" >> /etc/environment
+#      echo "AUTO RECEIVE SCHEDULE:"
+#      echo "${AUTO_RECEIVE_SCHEDULE}"
 	fi
 
 	if [ $SIGNAL_CLI_CMD_TIMEOUT_tmp -ne 0 ]
 	then
-	  export SIGNAL_CLI_CMD_TIMEOUT=$SIGNAL_CLI_CMD_TIMEOUT_tmp
-	  echo "Signal-cli command timeout:"
-      echo "$SIGNAL_CLI_CMD_TIMEOUT"
+	  echo "export SIGNAL_CLI_CMD_TIMEOUT=$(jq --raw-output '.SIGNAL_CLI_CMD_TIMEOUT // empty' $CONFIG_PATH)" >> /etc/environment
+#	  echo "Signal-cli command timeout:"
+#     echo "$SIGNAL_CLI_CMD_TIMEOUT"
 	fi
 	echo "test json"
 fi
+
+source /etc/environment
 
 sh /entrypoint.sh
