@@ -1,4 +1,4 @@
-ARG BUILD_FROM=bbernhard/signal-cli-rest-api:0.58
+ARG BUILD_FROM=bbernhard/signal-cli-rest-api:0.59
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
