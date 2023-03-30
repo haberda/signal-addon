@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "bbernhard/signal-cli-rest-api:0.65",
-    "amd64": "bbernhard/signal-cli-rest-api:0.65",
-    "armv7": "bbernhard/signal-cli-rest-api:0.65"
+    "aarch64": "bbernhard/signal-cli-rest-api:0.66",
+    "amd64": "bbernhard/signal-cli-rest-api:0.66",
+    "armv7": "bbernhard/signal-cli-rest-api:0.66"
   }
 }
