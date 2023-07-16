@@ -1,6 +1,6 @@
 ARG BUILD_FROM
 # hadolint ignore=DL3006
-FROM bbernhard/signal-cli-rest-api:0.66
+FROM bbernhard/signal-cli-rest-api:0.67
 
 COPY options.sh /options.sh
 
