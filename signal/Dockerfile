@@ -34,7 +34,7 @@ LABEL \
     maintainer="haberda" \
     org.label-schema.description="Signal Messenger" \
     org.label-schema.build-date="${BUILD_DATE}" \
-    org.label-schema.name="Nextcloud" \
+    org.label-schema.name="Signal Messenger" \
     org.label-schema.schema-version="${BUILD_VERSION}" \
     org.label-schema.url="https://github.com/haberda/signal-addon" \
     org.label-schema.usage="https://github.com/haberda/signal-addon" \
