@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 set -e
 
-if [ -d /data/data ]; then
-  mv /data/* /config
-  mv /config/options.json /data
+# move config from old to new locations if necessary
+if [ -d /data/data ] 
+then
+  rm -r /config/*
+  mv -f /data/* /config
+  rm -r /data/*
+  mv -f /config/options.json /data
 fi
 
 CONFIG_PATH=/data/options.json
