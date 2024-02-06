@@ -12,11 +12,11 @@ RUN apt-get clean \
 
         && apt-get install -y --no-install-recommends jq
 
-WORKDIR /data/data/
+# WORKDIR /config/data/
 
 ENTRYPOINT ["/options.sh"]
 
-VOLUME ["/data"]
+VOLUME ["/config"]
 
 # Build arugments
 ARG BUILD_ARCH
@@ -41,3 +41,4 @@ LABEL \
     org.label-schema.vcs-ref="${BUILD_REF}" \
     org.label-schema.vcs-url="https://github.com/haberda/" \
     org.label-schema.vendor="No Vendor"
+

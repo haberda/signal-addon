@@ -24,7 +24,6 @@ schema:
   mode: list(normal|native|json-rpc)
   AUTO_RECEIVE: bool
   SIGNAL_CLI_CMD_TIMEOUT: int
-#  reset_data: bool?
 environment:
   SIGNAL_CLI_CONFIG_DIR: /config
 image: ghcr.io/haberda/signal/{arch}
