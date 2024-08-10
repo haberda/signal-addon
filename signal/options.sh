@@ -3,9 +3,10 @@ set -e
 
 # move config from old to new locations if necessary
 if [ -d /data/data ] 
-then
-	mv -f /data/* /config
-    mv -f /config/options.json /data
+#then
+#	mv -f /data/* /config
+#    mv -f /config/options.json /data
+	rm -rf /data/data
 fi
 
 CONFIG_PATH=/data/options.json
