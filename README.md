@@ -6,7 +6,7 @@ Rest-API to Signal-CLI Home Assistant add-on
 
 # How to use this add-on
 
-Install the add-on, choose your desired port, start.
+Install the add-on, choose your desired port in the configuration tab of the add-on, start.
 
 After the add-on is started follow the directions at the link below starting from "Register phone number"
 
