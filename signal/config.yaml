@@ -25,5 +25,4 @@ schema:
   SIGNAL_CLI_CMD_TIMEOUT: int
 environment:
   SIGNAL_CLI_CONFIG_DIR: /config
-  ENABLE_PLUGINS: "true"
 image: ghcr.io/haberda/signal/{arch}
