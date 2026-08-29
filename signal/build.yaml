@@ -2,4 +2,3 @@
 build_from:
   aarch64: bbernhard/signal-cli-rest-api:0.100
   amd64: bbernhard/signal-cli-rest-api:0.100
-  armv7: bbernhard/signal-cli-rest-api:0.100
