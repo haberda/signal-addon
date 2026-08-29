@@ -35,6 +35,13 @@ Valid options:
 - `off`: Disable Auto receive
 - `on`: Enable Auto receive (default)
 
+### Default Signal Text Mode
+
+Sets the default text mode for outbound messages. Comes into play, if `text_mode` is not set as part of the request payload.
+
+- `normal`: no formatting options
+- `styled`: renders `*italic*`, `**bold**`, `~strikethrough~` 
+
 ### SIGNAL-CLI Command Timeout
 
 This option sets the time in seconds to wait before timing out the signal cli command. This option does not apply to json-rpc mode and will be ignored in that mode.(default: 60s)

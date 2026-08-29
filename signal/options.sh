@@ -2,7 +2,7 @@
 set -e
 
 # move config from old to new locations if necessary
-#if [ -d /data/data ] 
+#if [ -d /data/data ]
 #then
 #	mv -f /data/* /config
 #    mv -f /config/options.json /data
@@ -27,6 +27,8 @@ export reset_data=$(jq --raw-output '.reset_data // empty' $CONFIG_PATH)
 #fi
 #
 export MODE=$(jq --raw-output '.mode // empty' $CONFIG_PATH)
+
+export DEFAULT_SIGNAL_TEXT_MODE=$(jq --raw-output '.DEFAULT_SIGNAL_TEXT_MODE // "normal"' $CONFIG_PATH)
 
 if [ "${MODE_tmp}" != "json-rpc" ]; then
 
