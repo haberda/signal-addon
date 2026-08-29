@@ -37,10 +37,10 @@ Valid options:
 
 ### Default Signal Text Mode
 
-Sets the default text mode for outbound messages. Comes into play, if `text_mode` is not set as part of the request payload.
+Sets the default text mode for outbound messages. Only comes into play, if `text_mode` is not set for an individual message as part of the request payload.
 
 - `normal`: no formatting options
-- `styled`: renders `*italic*`, `**bold**`, `~strikethrough~`
+- `styled`: renders `*italic*`, `**bold**`, `~strikethrough~` 
 
 ### SIGNAL-CLI Command Timeout
 
