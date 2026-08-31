@@ -14,15 +14,17 @@ ports:
 ports_description:
   8080/tcp: Rest-api port
 options:
-  mode: list(normal|native|json-rpc)
+  mode: normal
   AUTO_RECEIVE: true
   SIGNAL_CLI_CMD_TIMEOUT: 60
+  DEFAULT_SIGNAL_TEXT_MODE: normal
 map:
   - addon_config:rw
 schema:
   mode: list(normal|native|json-rpc)
   AUTO_RECEIVE: bool
   SIGNAL_CLI_CMD_TIMEOUT: int
+  DEFAULT_SIGNAL_TEXT_MODE: list(normal|styled)
 environment:
   SIGNAL_CLI_CONFIG_DIR: /config
 image: ghcr.io/haberda/signal/{arch}
