@@ -54,7 +54,7 @@ As of this writing the upstream container versioning uses the 0.xx pattern for r
 
 ## Differences with the Upstream
 
-The primary difference between this add-on and the upstream is that the location of the persistent storage has been changed from: `/home/.local/share/signal-cli` to: `/data`.
+The primary difference between this add-on and the upstream is the location of persistent storage. Signal CLI data is stored in `/config` through the `SIGNAL_CLI_CONFIG_DIR` environment variable, rather than upstream's default `/home/.local/share/signal-cli`. The add-on reads its Home Assistant configuration options separately from `/data/options.json`.
 There is also a script that runs to allow for setting the above option(s).
 
 ## Bug Reporting
