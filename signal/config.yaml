@@ -20,7 +20,7 @@ options:
 map:
   - addon_config:rw
 schema:
-  mode: list(normal|native|json-rpc)
+  mode: list(normal|native|json-rpc|json-rpc-native)
   AUTO_RECEIVE: bool
   SIGNAL_CLI_CMD_TIMEOUT: int
   DEFAULT_SIGNAL_TEXT_MODE: list(normal|styled)
