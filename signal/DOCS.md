@@ -14,6 +14,10 @@ This add-on allows you to send messages via Signal Messenger to recipients who h
 
 Instructions for use can be found in the official [docs](https://www.home-assistant.io/integrations/signal_messenger/).
 
+## Security
+
+This add-on exposes the upstream Signal REST API on its configured port. The API does not provide authentication, so any client that can reach that port can use the linked Signal account, including sending and receiving messages. Run the add-on only on a trusted network, do not expose or port-forward its REST API port to the internet, and use a firewall, VPN, or authenticated reverse proxy if remote access is required.
+
 ## Options
 
 ### Mode
