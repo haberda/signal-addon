@@ -55,18 +55,18 @@ jobs:
           community: true
           path: "./${{ needs.information.outputs.target }}"
 
-#  lint-hadolint:
-#    name: Hadolint
-#    needs:
-#      - information
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: ⤵️ Check out code from GitHub
-#        uses: actions/checkout@v6
-#      - name: 🚀 Run Hadolint
-#        uses: brpaz/hadolint-action@v1.5.0
-#        with:
-#          dockerfile: "./${{ needs.information.outputs.target }}/Dockerfile"
+  lint-hadolint:
+    name: Hadolint
+    needs:
+      - information
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v6
+      - name: 🚀 Run Hadolint
+        uses: brpaz/hadolint-action@v1.5.0
+        with:
+          dockerfile: "./${{ needs.information.outputs.target }}/Dockerfile"
 
   lint-json:
     name: JSON Lint
@@ -88,49 +88,48 @@ jobs:
 #      - name: 🚀 Run mdl
 #        uses: actionshub/markdownlint@2.0.2
 
-#  lint-shellcheck:
-#    name: Shellcheck
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: ⤵️ Check out code from GitHub
-#        uses: actions/checkout@v6
-#      - name: 🚀 Run Shellcheck
-#        uses: ludeeus/action-shellcheck@1.1.0
-#        env:
-#          SHELLCHECK_OPTS: -s bash
+  lint-shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v6
+      - name: 🚀 Run Shellcheck
+        uses: ludeeus/action-shellcheck@1.1.0
+        env:
+          SHELLCHECK_OPTS: -s bash
 
-#  lint-yamllint:
-#    name: YAMLLint
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: ⤵️ Check out code from GitHub
-#        uses: actions/checkout@v6
-#      - name: 🚀 Run YAMLLint
-#        uses: frenck/action-yamllint@v1.1
+  lint-yamllint:
+    name: YAMLLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v6
+      - name: 🚀 Run YAMLLint
+        uses: frenck/action-yamllint@v1.1
 
-#  lint-prettier:
-#    name: Prettier
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: ⤵️ Check out code from GitHub
-#        uses: actions/checkout@v6
-#      - name: 🚀 Run Prettier
-#        uses: creyD/prettier_action@v3.3
-#        with:
-#          prettier_options: --write **/*.{json,js,md,yaml}
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  lint-prettier:
+    name: Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v6
+      - name: 🚀 Run Prettier
+        uses: creyD/prettier_action@v3.3
+        with:
+          dry: true
+          prettier_options: --check **/*.{json,js,md,yaml}
 
   build:
     name: Build ${{ matrix.architecture }}
     needs:
       - information
       - lint-addon
-      #- lint-hadolint
+      - lint-hadolint
       - lint-json
-      #- lint-prettier
-      #- lint-shellcheck
-      #- lint-yamllint
+      - lint-prettier
+      - lint-shellcheck
+      - lint-yamllint
     runs-on: ubuntu-latest
     strategy:
       matrix:

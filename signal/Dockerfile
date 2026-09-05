@@ -4,13 +4,13 @@ FROM ${BUILD_FROM}
 
 COPY options.sh /options.sh
 
-RUN ["chmod", "+x", "/options.sh"]
-
-RUN apt-get clean \
-
+# Keep jq aligned with security updates in the upstream Ubuntu base image.
+# hadolint ignore=DL3008
+RUN chmod +x /options.sh \
+        && apt-get clean \
         && apt-get update \
-
-        && apt-get install -y --no-install-recommends jq
+        && apt-get install -y --no-install-recommends jq \
+        && rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT ["/options.sh"]
 
