@@ -1,6 +1,6 @@
 ARG BUILD_FROM
 # hadolint ignore=DL3006
-FROM bbernhard/signal-cli-rest-api:0.100
+FROM ${BUILD_FROM}
 
 COPY options.sh /options.sh
 
@@ -41,4 +41,3 @@ LABEL \
     org.label-schema.vcs-ref="${BUILD_REF}" \
     org.label-schema.vcs-url="https://github.com/haberda/" \
     org.label-schema.vendor="No Vendor"
-
