@@ -12,8 +12,6 @@ RUN apt-get clean \
 
         && apt-get install -y --no-install-recommends jq
 
-# WORKDIR /config/data/
-
 ENTRYPOINT ["/options.sh"]
 
 VOLUME ["/config"]
