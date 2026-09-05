@@ -207,7 +207,6 @@ jobs:
               "version": "${{ needs.information.outputs.version }}"
             }
 
-
   publish-stable:
     name: 📢 Publish to stable repository
     if: needs.information.outputs.environment == 'stable'

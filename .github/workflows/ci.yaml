@@ -79,14 +79,14 @@ jobs:
           shopt -s globstar
           cat **/*.json | jq '.'
 
-#  lint-markdown:
-#    name: MarkdownLint
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: ⤵️ Check out code from GitHub
-#        uses: actions/checkout@v6
-#      - name: 🚀 Run mdl
-#        uses: actionshub/markdownlint@2.0.2
+  #  lint-markdown:
+  #    name: MarkdownLint
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - name: ⤵️ Check out code from GitHub
+  #        uses: actions/checkout@v6
+  #      - name: 🚀 Run mdl
+  #        uses: actionshub/markdownlint@2.0.2
 
   lint-shellcheck:
     name: Shellcheck
@@ -115,9 +115,10 @@ jobs:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v6
       - name: 🚀 Run Prettier
-        uses: creyD/prettier_action@v3.3
+        uses: creyD/prettier_action@v4.6
         with:
           dry: true
+          prettier_version: 3.9.6
           prettier_options: --check **/*.{json,js,md,yaml}
 
   build:
