@@ -47,10 +47,6 @@ Sets the default text mode for outbound messages. Only comes into play, if `text
 
 This option sets the time in seconds to wait before timing out the signal cli command. This option does not apply to `json-rpc` or `json-rpc-native` mode and will be ignored in those modes. (default: 60s)
 
-### Reset data
-
-This option deletes all data and resets the add-on. Be aware all your settings will be destroyed.
-
 ## Versioning
 
 This add-on follows the versioning of the upstream container. There is very little difference between this add-on and the container found [here](https://github.com/bbernhard/signal-cli-rest-api).
@@ -65,4 +61,3 @@ There is also a script that runs to allow for setting the above option(s).
 
 Bug reports can be filed either with the [add-on repository](https://github.com/haberda/hassio_addons), or with the [upstream repository](https://github.com/bbernhard/signal-cli-rest-api). 
 Please attempt to determine if your bug is related to add-on specific issues, or application issues before filing your report. Add-on specific issues should be submitted to the add-on repository, application specific issues should be filed with the upstream repository.
-
