@@ -17,6 +17,7 @@ options:
   AUTO_RECEIVE: true
   SIGNAL_CLI_CMD_TIMEOUT: 60
   DEFAULT_SIGNAL_TEXT_MODE: normal
+  LOG_LEVEL: info
 map:
   - app_config:rw
 schema:
@@ -24,6 +25,7 @@ schema:
   AUTO_RECEIVE: bool
   SIGNAL_CLI_CMD_TIMEOUT: int
   DEFAULT_SIGNAL_TEXT_MODE: list(normal|styled)
+  LOG_LEVEL: list(debug|info|warn|error)
 environment:
   SIGNAL_CLI_CONFIG_DIR: /config
 image: ghcr.io/haberda/signal/{arch}

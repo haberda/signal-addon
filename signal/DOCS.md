@@ -47,6 +47,15 @@ Sets the default text mode for outbound messages. Only comes into play, if `text
 - `normal`: no formatting options
 - `styled`: renders `*italic*`, `**bold**`, `~strikethrough~`
 
+### Log Level
+
+Controls the upstream REST API log verbosity.
+
+- `debug`: detailed diagnostic logging
+- `info`: routine operational logging (default)
+- `warn`: warnings and errors only
+- `error`: errors only
+
 ### SIGNAL-CLI Command Timeout
 
 This option sets the time in seconds to wait before timing out the signal cli command. This option does not apply to `json-rpc` or `json-rpc-native` mode and will be ignored in those modes. (default: 60s)

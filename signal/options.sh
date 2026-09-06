@@ -15,6 +15,9 @@ export MODE
 DEFAULT_SIGNAL_TEXT_MODE=$(jq --raw-output '.DEFAULT_SIGNAL_TEXT_MODE // "normal"' "$CONFIG_PATH")
 export DEFAULT_SIGNAL_TEXT_MODE
 
+LOG_LEVEL=$(jq --raw-output '.LOG_LEVEL // "info"' "$CONFIG_PATH")
+export LOG_LEVEL
+
 if [ "${MODE_tmp}" != "json-rpc" ] && [ "${MODE_tmp}" != "json-rpc-native" ]; then
 
 	if [ "${AUTO_RECEIVE_SCHEDULE_bool}" = "true" ]
