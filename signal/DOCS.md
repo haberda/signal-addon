@@ -56,6 +56,27 @@ Controls the upstream REST API log verbosity.
 - `warn`: warnings and errors only
 - `error`: errors only
 
+### JSON-RPC Settings
+
+These options apply only to `json-rpc` and `json-rpc-native` modes.
+
+#### Trust New Identities
+
+Controls how Signal identity keys are trusted when they are first encountered.
+
+- `on-first-use`: trust the first identity seen for a recipient (default)
+- `always`: automatically trust new or changed identities
+- `never`: do not automatically trust identities
+
+#### Ignore Downloaded Media
+
+When enabled, the associated media type is not automatically downloaded when receiving messages. All options default to `false`.
+
+- Ignore attachments
+- Ignore stories
+- Ignore avatars
+- Ignore stickers
+
 ### SIGNAL-CLI Command Timeout
 
 This option sets the time in seconds to wait before timing out the signal cli command. This option does not apply to `json-rpc` or `json-rpc-native` mode and will be ignored in those modes. (default: 60s)

@@ -18,7 +18,24 @@ export DEFAULT_SIGNAL_TEXT_MODE
 LOG_LEVEL=$(jq --raw-output '.LOG_LEVEL // "info"' "$CONFIG_PATH")
 export LOG_LEVEL
 
-if [ "${MODE_tmp}" != "json-rpc" ] && [ "${MODE_tmp}" != "json-rpc-native" ]; then
+if [ "${MODE_tmp}" = "json-rpc" ] || [ "${MODE_tmp}" = "json-rpc-native" ]; then
+
+	JSON_RPC_TRUST_NEW_IDENTITIES=$(jq --raw-output '.JSON_RPC_TRUST_NEW_IDENTITIES // "on-first-use"' "$CONFIG_PATH")
+	export JSON_RPC_TRUST_NEW_IDENTITIES
+
+	JSON_RPC_IGNORE_ATTACHMENTS=$(jq --raw-output '.JSON_RPC_IGNORE_ATTACHMENTS // false' "$CONFIG_PATH")
+	export JSON_RPC_IGNORE_ATTACHMENTS
+
+	JSON_RPC_IGNORE_STORIES=$(jq --raw-output '.JSON_RPC_IGNORE_STORIES // false' "$CONFIG_PATH")
+	export JSON_RPC_IGNORE_STORIES
+
+	JSON_RPC_IGNORE_AVATARS=$(jq --raw-output '.JSON_RPC_IGNORE_AVATARS // false' "$CONFIG_PATH")
+	export JSON_RPC_IGNORE_AVATARS
+
+	JSON_RPC_IGNORE_STICKERS=$(jq --raw-output '.JSON_RPC_IGNORE_STICKERS // false' "$CONFIG_PATH")
+	export JSON_RPC_IGNORE_STICKERS
+
+else
 
 	if [ "${AUTO_RECEIVE_SCHEDULE_bool}" = "true" ]
 	then
