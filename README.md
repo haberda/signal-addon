@@ -1,23 +1,16 @@
-[![](logo.png)](https://www.signal.org/)
+[![Signal logo](signal/logo.png)](https://www.signal.org/)
 
-# Signal Messenger
+# Signal Messenger add-on
 
-Rest-API to Signal-CLI Home Assistant add-on
+This is the development repository for the Home Assistant add-on packaging [Signal CLI REST API](https://github.com/bbernhard/signal-cli-rest-api).
 
-# How to use this add-on
+## Getting started
 
-Install the add-on, choose your desired port in the configuration tab of the add-on, start.
+- [Add-on overview and quick start](signal/README.md)
+- [Configuration, receiving, and security documentation](signal/DOCS.md)
+- [Production add-on repository](https://github.com/haberda/hassio_addons)
+- [Companion Signal Messenger REST integration](https://github.com/haberda/signal-integration)
 
-After the add-on is started follow the directions at the link below starting from "Register phone number"
+User-facing instructions are maintained in the `signal/` directory and published with the add-on. This landing page links to them rather than duplicating them.
 
-https://github.com/bbernhard/signal-cli-rest-api/blob/master/doc/HOMEASSISTANT.md
-
-Then proceed here:
-
-https://www.home-assistant.io/integrations/signal_messenger/
-
-# API details
-
-If you want to use i.e. REST to receive messages in HA, you can find more details [here](https://bbernhard.github.io/signal-cli-rest-api/)
-
-All credit to [@bbernhard](https://github.com/bbernhard), all I did was take their [work](https://github.com/bbernhard/signal-cli-rest-api) and make an add-on.
+The upstream REST API is developed by [bbernhard and contributors](https://github.com/bbernhard/signal-cli-rest-api); this project packages it for Home Assistant.
