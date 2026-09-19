@@ -12,6 +12,9 @@ SIGNAL_CLI_CMD_TIMEOUT_tmp=$(jq --raw-output '.SIGNAL_CLI_CMD_TIMEOUT // empty' 
 MODE=$(jq --raw-output '.mode // empty' "$CONFIG_PATH")
 export MODE
 
+WEBUI_ENABLED=$(jq --raw-output '.WEBUI_ENABLED // true' "$CONFIG_PATH")
+export WEBUI_ENABLED
+
 DEFAULT_SIGNAL_TEXT_MODE=$(jq --raw-output '.DEFAULT_SIGNAL_TEXT_MODE // "normal"' "$CONFIG_PATH")
 export DEFAULT_SIGNAL_TEXT_MODE
 

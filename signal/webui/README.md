@@ -40,3 +40,7 @@ python3 -m venv /tmp/signal-webui-tests
 Browser tests simulate an ingress URL prefix and a local backend; they never call Signal. Production has no localhost bypass for ingress authentication. Tests supply their own local-only server subclass. Set `SIGNAL_UI_SCREENSHOT` to an output path for a mobile screenshot during browser tests. The browser test skips if Playwright is not installed; CI installs it and Chromium explicitly.
 
 Before releasing, test the built container on HAOS on both architectures and all four modes. Confirm ingress works while direct access to port 8099 is denied, the existing integration still connects to 8080, restart/shutdown cleans up all processes, QR linking completes with a test phone, and direct/group sends and mutations work on a disposable account/group. Check primary versus companion-device restrictions and backend/HA disconnects. This cannot be established by mock tests alone.
+
+## AI assistance
+
+AI was used to maintain and improve the existing add-on. The management web interface described here was generated entirely with AI assistance.

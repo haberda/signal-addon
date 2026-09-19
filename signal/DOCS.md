@@ -13,6 +13,8 @@ This add-on provides the Signal REST API backend for sending and receiving messa
 
 Select **Open Web UI** on the add-on's page in Home Assistant. The interface is served only through Home Assistant ingress: port 8099 is not published, and the UI accepts connections only from the ingress gateway. No separate UI password, browser extension, or external website is required. Dark mode is the default; the theme switch supports light mode and saves only that preference in your browser.
 
+The `WEBUI_ENABLED` option controls whether the management interface starts. It defaults to `true`. Set it to `false` if you do not want the web UI; the Signal REST API continues to run for other clients, but **Open Web UI** will be unavailable after the add-on restarts.
+
 ### Onboarding and daily use
 
 1. Open **Link an account**, name the linked device, and confirm generation of a QR code. On your phone, use Signal → Settings → Linked devices to scan and approve it. The QR is generated locally, never by an external service.
@@ -70,6 +72,10 @@ Receiving does not provide a durable inbox or guaranteed replay after disconnect
 - For integration diagnostics and Assist troubleshooting, see the [integration documentation](https://github.com/haberda/signal-integration#receiving-troubleshooting).
 
 For sending notifications without the companion integration, follow the [built-in Signal Messenger integration documentation](https://www.home-assistant.io/integrations/signal_messenger/). For direct REST access, use the [upstream API reference](https://bbernhard.github.io/signal-cli-rest-api/).
+
+## AI assistance
+
+AI was used to maintain and improve this existing add-on. The management web interface and its supporting implementation were generated entirely with AI assistance.
 
 ## Security
 

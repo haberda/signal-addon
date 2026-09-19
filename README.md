@@ -14,3 +14,7 @@ This is the development repository for the Home Assistant add-on packaging [Sign
 User-facing instructions are maintained in the `signal/` directory and published with the add-on. This landing page links to them rather than duplicating them.
 
 The upstream REST API is developed by [bbernhard and contributors](https://github.com/bbernhard/signal-cli-rest-api); this project packages it for Home Assistant.
+
+## AI assistance
+
+AI was used to maintain and improve this existing add-on. The management web interface and its supporting implementation were generated entirely with AI assistance.

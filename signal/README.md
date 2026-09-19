@@ -23,3 +23,7 @@ Read [DOCS.md](DOCS.md) for configuration, networking, troubleshooting, and secu
 For direct API usage, see the [upstream API reference](https://bbernhard.github.io/signal-cli-rest-api/). Home Assistant's [built-in Signal Messenger integration](https://www.home-assistant.io/integrations/signal_messenger/) remains an alternative for sending notifications.
 
 The upstream REST API is developed by [bbernhard and contributors](https://github.com/bbernhard/signal-cli-rest-api); this project packages it for Home Assistant.
+
+## AI assistance
+
+AI was used to maintain and improve this existing add-on. The management web interface and its supporting implementation were generated entirely with AI assistance.

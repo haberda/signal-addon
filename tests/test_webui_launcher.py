@@ -74,6 +74,23 @@ class LauncherTests(unittest.TestCase):
         self.assertEqual(code, 0)
         kill.assert_any_call(102, signal.SIGKILL)
 
+    def test_webui_can_be_disabled(self):
+        api = Mock(pid=101)
+        api.poll.return_value = None
+        handlers = {}
+
+        def stopping(_delay):
+            handlers[signal.SIGTERM](signal.SIGTERM, None)
+
+        with patch.object(launcher.signal, "signal", side_effect=lambda sig, fn: handlers.update({sig: fn})), \
+             patch.object(launcher.subprocess, "Popen", return_value=api) as popen, \
+             patch.object(launcher.time, "sleep", side_effect=stopping), \
+             patch.object(launcher.subprocess, "run"), \
+             patch.dict(launcher.os.environ, {"WEBUI_ENABLED": "false"}):
+            self.assertEqual(launcher.main(), 0)
+        self.assertEqual(popen.call_count, 1)
+        self.assertEqual(popen.call_args.args[0], ["/entrypoint.sh"])
+
 
 if __name__ == "__main__":
     unittest.main()

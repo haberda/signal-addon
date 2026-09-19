@@ -22,20 +22,21 @@ def main():
     try:
         children.append(subprocess.Popen(["/entrypoint.sh"], start_new_session=True))
         # The UI has no reason to read Signal keys, options.json, or HA tokens.
-        children.append(
-            subprocess.Popen(
-                [sys.executable, "/opt/signal-webui/server.py"],
-                user=65534,
-                group=65534,
-                extra_groups=[],
-                start_new_session=True,
-                env={
-                    "PATH": "/usr/bin:/bin",
-                    "LANG": "C.UTF-8",
-                    "PYTHONDONTWRITEBYTECODE": "1",
-                },
+        if os.environ.get("WEBUI_ENABLED", "true").lower() == "true":
+            children.append(
+                subprocess.Popen(
+                    [sys.executable, "/opt/signal-webui/server.py"],
+                    user=65534,
+                    group=65534,
+                    extra_groups=[],
+                    start_new_session=True,
+                    env={
+                        "PATH": "/usr/bin:/bin",
+                        "LANG": "C.UTF-8",
+                        "PYTHONDONTWRITEBYTECODE": "1",
+                    },
+                )
             )
-        )
         while not stopping and all(p.poll() is None for p in children):
             time.sleep(0.2)
         code = 0 if stopping else 1
