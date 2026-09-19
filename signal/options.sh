@@ -49,4 +49,4 @@ else
 
 fi
 
-exec /entrypoint.sh
+exec python3 /opt/signal-webui/launcher.py

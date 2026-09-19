@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Signal · Control room</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="#overview"
+        ><span class="brand-mark">S</span><span>Signal<small>CONTROL ROOM</small></span></a
+      >
+      <nav aria-label="Main navigation">
+        <a href="#overview">Overview</a>
+        <a href="#onboarding">Link an account</a>
+        <a href="#messages">Test messages</a>
+        <a href="#groups">Groups</a>
+        <a href="#contacts">Contacts</a>
+        <a href="#account">Account & devices</a>
+        <a href="#security">Identity & security</a>
+      </nav>
+      <div class="sidebar-footer">
+        <span class="dot"></span> Home Assistant ingress
+        <p>Private management interface<br />Local REST connection</p>
+      </div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar">
+        <label class="account-label"
+          >Active account<select id="account" aria-label="Active Signal account">
+            <option value="">No account selected</option>
+          </select></label
+        >
+        <button id="refresh" class="quiet" type="button">Refresh</button>
+        <button id="theme" class="quiet" type="button" aria-label="Switch to light theme">Light mode</button>
+      </header>
+      <main id="main" tabindex="-1"></main>
+      <div id="notice" role="status" aria-live="polite" hidden></div>
+    </div>
+    <dialog id="confirm">
+      <form method="dialog">
+        <span class="eyebrow">REVIEW OPERATION</span>
+        <h2 id="confirm-title">Confirm change</h2>
+        <p id="confirm-context"></p>
+        <pre id="confirm-summary"></pre>
+        <p>This acts on your real Signal account. Changes and messages cannot be assumed undone if the connection fails. Requests are not automatically retried.</p>
+        <div class="actions"><button value="cancel" class="quiet">Cancel</button><button id="confirm-submit" value="confirm">Confirm</button></div>
+      </form>
+    </dialog>
+  </body>
+</html>

@@ -119,7 +119,23 @@ jobs:
         with:
           dry: true
           prettier_version: 3.9.6
-          prettier_options: --check **/*.{json,js,md,yaml}
+          prettier_options: --check **/*.{json,js,md,yaml,html,css}
+
+  test-webui:
+    name: Ingress UI tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+      - name: Install isolated test dependencies
+        run: |
+          python3 -m venv /tmp/signal-webui-tests
+          /tmp/signal-webui-tests/bin/pip install -r tests/requirements.txt
+          /tmp/signal-webui-tests/bin/playwright install --with-deps chromium
+      - name: Test API contracts, ingress security, and browser workflows
+        run: |
+          node --check signal/webui/static/app.js
+          /tmp/signal-webui-tests/bin/python -m unittest discover -s tests -v
 
   build:
     name: Build ${{ matrix.architecture }}
@@ -131,6 +147,7 @@ jobs:
       - lint-prettier
       - lint-shellcheck
       - lint-yamllint
+      - test-webui
     runs-on: ubuntu-latest
     strategy:
       matrix:

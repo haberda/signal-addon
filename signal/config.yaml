@@ -8,6 +8,9 @@ arch:
   - amd64
 description: Signal Messenger Home Assistant Addon
 startup: services
+ingress: true
+ingress_port: 8099
+panel_icon: mdi:message-lock
 ports:
   8080/tcp: 8080
 ports_description:
