@@ -30,3 +30,6 @@ htmlcov/
 
 # Logs
 *.log
+
+# Tests
+tests/
