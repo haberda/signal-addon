@@ -314,7 +314,7 @@ def prepare(request):
     if "account" in params and not re.fullmatch(
         r"\+[1-9][0-9]{3,14}", params["account"]
     ):
-        raise Invalid("Use an international account number, such as +12025550101")
+        raise Invalid("Use an international account number, such as +XXXXXXXXXXX")
     if "group" in params and not params["group"].startswith("group."):
         raise Invalid("Select a REST group ID (group.…)")
     if "device" in params and (
