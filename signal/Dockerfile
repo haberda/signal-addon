@@ -19,6 +19,7 @@ RUN chmod +x /options.sh \
 # The wrapper must begin as root because Supervisor's /data/options.json is
 # intentionally not readable by the rootless signal-api user. options.sh
 # drops to signal-api before handing control to the upstream s6 init.
+# hadolint ignore=DL3002
 USER root
 
 ENTRYPOINT ["/options.sh"]
