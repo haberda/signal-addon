@@ -1,5 +1,7 @@
 #!/command/with-contenv sh
 
+. /run/signal-addon/options.env
+
 if [ "${WEBUI_ENABLED:-true}" != "true" ]; then
 	# Keep the longrun service healthy while the UI is disabled.
 	exec sleep infinity

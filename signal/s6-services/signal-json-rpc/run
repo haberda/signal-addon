@@ -1,0 +1,6 @@
+#!/command/with-contenv sh
+. /run/signal-addon/options.env
+if [ "${MODE}" != "json-rpc" ] && [ "${MODE}" != "json-rpc-native" ]; then
+	exec sleep infinity
+fi
+exec jsonrpc2-helper

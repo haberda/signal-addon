@@ -2,27 +2,27 @@ ARG BUILD_FROM
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
-COPY options.sh /options.sh
+COPY options.sh /etc/cont-init.d/00-signal-options
 COPY webui /opt/signal-webui
 COPY --chmod=755 webui-service /etc/s6-overlay/s6-rc.d/signal-webui
+COPY --chmod=755 s6-services /etc/s6-overlay/s6-rc.d
 
 # The upstream 0.101 image is rootless and sets USER signal-api in its final
 # stage. Package installation still needs root; runtime services stay unprivileged.
 USER root
 # hadolint ignore=DL3008
-RUN chmod +x /options.sh \
+RUN chmod +x /etc/cont-init.d/00-signal-options \
         && apt-get clean \
         && apt-get update \
         && apt-get install -y --no-install-recommends jq python3 python3-pil python3-qrcode \
         && rm -rf /var/lib/apt/lists/*
 
-# The wrapper must begin as root because Supervisor's /data/options.json is
-# intentionally not readable by the rootless signal-api user. options.sh
-# drops to signal-api before handing control to the upstream s6 init.
+# s6-overlay must be PID 1. The cont-init script reads Supervisor's protected
+# options file as root, while service-level user files keep workloads rootless.
 # hadolint ignore=DL3002
 USER root
 
-ENTRYPOINT ["/options.sh"]
+ENTRYPOINT ["/init"]
 
 VOLUME ["/config"]
 
