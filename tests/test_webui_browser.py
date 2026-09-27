@@ -63,7 +63,7 @@ class BrowserTests(unittest.TestCase):
                 "pending_requests": [],
             }
             if method == "GET":
-                if path == "/v1/groups/%2B12025550101":
+                if path == "/v1/groups/%2B15558675309":
                     return [group]
                 if "/groups/" in path:
                     return group
@@ -98,7 +98,7 @@ class BrowserTests(unittest.TestCase):
             send = page.locator("section").filter(
                 has=page.get_by_role("heading", name="Send test message", exact=True)
             )
-            send.get_by_label("Recipient number").fill("+12025550102")
+            send.get_by_label("Recipient number").fill("+15558675310")
             send.get_by_label("Message", exact=True).fill(
                 "Hello <script>alert(1)</script>"
             )
@@ -112,7 +112,7 @@ class BrowserTests(unittest.TestCase):
             self.assertEqual(len(sent), 1)
             self.assertEqual(sent[0]["message"], "Hello <script>alert(1)</script>")
             fail_send = True
-            send.get_by_label("Recipient number").fill("+12025550102")
+            send.get_by_label("Recipient number").fill("+15558675310")
             send.get_by_label("Message", exact=True).fill("uncertain")
             send.get_by_role("button", name="Send test message", exact=True).click()
             page.get_by_role("button", name="Confirm", exact=True).click()
@@ -137,7 +137,7 @@ class BrowserTests(unittest.TestCase):
             self.assertIn(
                 (
                     "PUT",
-                    "/v1/groups/%2B12025550101/" + GROUP.replace("=", "%3D"),
+                    "/v1/groups/%2B15558675309/" + GROUP.replace("=", "%3D"),
                     {"name": "New family name"},
                 ),
                 calls,

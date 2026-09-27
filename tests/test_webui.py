@@ -17,7 +17,7 @@ spec = importlib.util.spec_from_file_location(
 )
 web = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(web)
-ACCOUNT = "+12025550101"
+ACCOUNT = "+15558675309"
 GROUP = "group.YWJjZA=="
 PNG = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a3ioAAAAASUVORK5CYII="
 
@@ -123,7 +123,7 @@ class ContractTests(unittest.TestCase):
         with self.assertRaises(web.Invalid):
             web.prepare(
                 request(
-                    data={"recipients": [ACCOUNT, "+12025550102"], "message": "test"}
+                    data={"recipients": [ACCOUNT, "+15558675310"], "message": "test"}
                 )
             )
         with self.assertRaises(web.Invalid):
