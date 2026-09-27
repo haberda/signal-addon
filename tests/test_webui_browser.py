@@ -42,7 +42,7 @@ class BrowserTests(unittest.TestCase):
         def backend(method, path, data):
             calls.append((method, path, data))
             if path == "/v1/about":
-                return {"mode": "json-rpc", "version": "0.100"}
+                return {"mode": "json-rpc", "version": "0.101"}
             if path == "/v1/accounts":
                 return [ACCOUNT]
             if path.startswith("/v1/qrcodelink/raw"):

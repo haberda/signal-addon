@@ -1,0 +1,8 @@
+#!/command/with-contenv sh
+
+if [ "${WEBUI_ENABLED:-true}" != "true" ]; then
+	# Keep the longrun service healthy while the UI is disabled.
+	exec sleep infinity
+fi
+
+exec python3 /opt/signal-webui/server.py

@@ -4,14 +4,19 @@ FROM ${BUILD_FROM}
 
 COPY options.sh /options.sh
 COPY webui /opt/signal-webui
+COPY --chmod=755 webui-service /etc/s6-overlay/s6-rc.d/signal-webui
 
-# Keep jq aligned with security updates in the upstream Ubuntu base image.
+# The upstream 0.101 image is rootless and sets USER signal-api in its final
+# stage. Package installation still needs root; runtime services stay unprivileged.
+USER root
 # hadolint ignore=DL3008
 RUN chmod +x /options.sh \
         && apt-get clean \
         && apt-get update \
         && apt-get install -y --no-install-recommends jq python3 python3-pil python3-qrcode \
         && rm -rf /var/lib/apt/lists/*
+
+USER signal-api
 
 ENTRYPOINT ["/options.sh"]
 
