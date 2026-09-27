@@ -16,7 +16,10 @@ RUN chmod +x /options.sh \
         && apt-get install -y --no-install-recommends jq python3 python3-pil python3-qrcode \
         && rm -rf /var/lib/apt/lists/*
 
-USER signal-api
+# The wrapper must begin as root because Supervisor's /data/options.json is
+# intentionally not readable by the rootless signal-api user. options.sh
+# drops to signal-api before handing control to the upstream s6 init.
+USER root
 
 ENTRYPOINT ["/options.sh"]
 

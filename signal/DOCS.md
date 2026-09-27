@@ -15,6 +15,8 @@ Select **Open Web UI** on the add-on's page in Home Assistant. The interface is 
 
 The `WEBUI_ENABLED` option controls whether the management interface starts. It defaults to `true`. Set it to `false` if you do not want the web UI; the Signal REST API continues to run for other clients, but **Open Web UI** will be unavailable after the add-on restarts.
 
+The rootless runtime briefly starts the options wrapper as root because Supervisor protects `/data/options.json`; it drops to the upstream `signal-api` UID/GID 1000 before starting the API and web UI services.
+
 ### Onboarding and daily use
 
 1. Open **Link an account**, name the linked device, and confirm generation of a QR code. On your phone, use Signal → Settings → Linked devices to scan and approve it. The QR is generated locally, never by an external service.

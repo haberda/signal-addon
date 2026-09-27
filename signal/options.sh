@@ -52,6 +52,11 @@ else
 
 fi
 
-# Keep the upstream s6-overlay init as PID 1 so API and JSON-RPC services
-# retain their native lifecycle behavior.
+# Supervisor's /data/options.json is root-readable only. The wrapper starts
+# as root to read it, then drops to the fixed upstream rootless UID/GID before
+# handing control to s6-overlay. All long-running services remain rootless.
+if [ "$(id --user)" -eq 0 ]; then
+	exec setpriv --reuid=1000 --regid=1000 --init-groups /init
+fi
+
 exec /init
