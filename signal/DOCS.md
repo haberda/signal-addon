@@ -15,7 +15,7 @@ Select **Open Web UI** on the add-on's page in Home Assistant. The interface is 
 
 The `WEBUI_ENABLED` option controls whether the management interface starts. It defaults to `true`. Set it to `false` if you do not want the web UI; the Signal REST API continues to run for other clients, but **Open Web UI** will be unavailable after the add-on restarts.
 
-The rootless runtime briefly starts the options wrapper as root because Supervisor protects `/data/options.json`; it drops to the upstream `signal-api` UID/GID 1000 before starting the API and web UI services.
+The rootless runtime reads Supervisor's protected `/data/options.json` during s6 initialization. The API, JSON-RPC helper, and web UI then run as the upstream `signal-api` UID/GID 1000, with persisted Signal state stored in `/config`.
 
 ### Onboarding and daily use
 

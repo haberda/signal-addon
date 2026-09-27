@@ -3,4 +3,4 @@
 if [ "${MODE}" != "json-rpc" ] && [ "${MODE}" != "json-rpc-native" ]; then
 	exec sleep infinity
 fi
-exec jsonrpc2-helper
+exec s6-setuidgid signal-api jsonrpc2-helper

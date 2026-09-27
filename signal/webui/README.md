@@ -6,7 +6,7 @@ Home Assistant ingress forwards to the unpublished port 8099. The Python HTTP se
 
 The browser uses same-origin, ingress-relative URLs. A small gateway maps explicit operations to `http://127.0.0.1:8080`, validates their fields, and does not forward browser authentication headers. There is no generic proxy, CLI runner, filesystem endpoint, receive consumer, CDN, or remotely generated QR image. Static assets use a restrictive CSP and backend data is inserted as text, not HTML. Mutations require a CSRF token and confirmation; duplicate operation IDs are remembered for five minutes (not durable across restart). UI request bodies are limited to 3 MiB and backend responses to 4 MiB.
 
-The service runs as the rootless upstream `signal-api` user and receives no Home Assistant tokens. The options wrapper briefly starts as root because Supervisor's `/data/options.json` is root-readable only, exports configuration, and drops to UID/GID 1000 before handing control to `/init`. It uses the upstream s6 process tree, with no Node runtime or JavaScript build step; the web UI is an additional s6 longrun service. No ingress authentication code is added to the upstream REST API.
+The container's s6 init reads Supervisor's root-readable `/data/options.json` during initialization and prepares the runtime environment. The API and web UI processes run as the rootless upstream `signal-api` UID/GID 1000. It uses the upstream s6 process tree, with no Node runtime or JavaScript build step; the web UI is an additional s6 longrun service. No ingress authentication code is added to the upstream REST API.
 
 ## Feature review
 

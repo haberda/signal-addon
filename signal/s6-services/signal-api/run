@@ -1,3 +1,3 @@
 #!/command/with-contenv sh
 . /run/signal-addon/options.env
-exec signal-cli-rest-api -signal-cli-config="${SIGNAL_CLI_CONFIG_DIR}"
+exec s6-setuidgid signal-api signal-cli-rest-api -signal-cli-config="${SIGNAL_CLI_CONFIG_DIR}"

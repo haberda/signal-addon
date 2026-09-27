@@ -4,7 +4,8 @@
 
 if [ "${WEBUI_ENABLED:-true}" != "true" ]; then
 	# Keep the longrun service healthy while the UI is disabled.
-	exec sleep infinity
+	echo "Signal Web UI is disabled by WEBUI_ENABLED"
+	exec s6-setuidgid signal-api sleep infinity
 fi
 
-exec python3 /opt/signal-webui/server.py
+exec s6-setuidgid signal-api python3 /opt/signal-webui/server.py

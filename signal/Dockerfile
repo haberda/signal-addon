@@ -18,7 +18,7 @@ RUN chmod +x /etc/cont-init.d/00-signal-options \
         && rm -rf /var/lib/apt/lists/*
 
 # s6-overlay must be PID 1. The cont-init script reads Supervisor's protected
-# options file as root, while service-level user files keep workloads rootless.
+# options file as root, while each service drops to the rootless signal-api user.
 # hadolint ignore=DL3002
 USER root
 
