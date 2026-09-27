@@ -1,7 +1,7 @@
 """Ingress-only UI and explicit, validated operations against the loopback API.
 
 No generic proxy, CLI execution, receive consumer, or filesystem API is exposed.
-Contracts: signal-cli-rest-api 0.100 / signal-cli 0.14.5.
+Contracts: signal-cli-rest-api 0.101 / signal-cli 0.14.8.
 """
 
 import base64
@@ -438,12 +438,12 @@ class Gateway:
                     raise Invalid("Operation ID already used")
                 return result
             try:
-                # 0.100 drops a zero timer from its JSON-RPC updateGroup payload.
+                # 0.101 drops a zero timer from its JSON-RPC updateGroup payload.
                 if action == "update_group" and data.get("expiration_time") == 0:
                     about = upstream("GET", "/v1/about", None)
                     if about.get("mode") in ("json-rpc", "json-rpc-native"):
                         raise BackendError(
-                            "Upstream 0.100 cannot reliably disable group timers in JSON-RPC mode. Use your Signal phone or temporarily switch to normal/native mode."
+                            "Upstream 0.101 cannot reliably disable group timers in JSON-RPC mode. Use your Signal phone or temporarily switch to normal/native mode."
                         )
                 result = upstream(method, path, data)
                 if action == "link":

@@ -6,11 +6,11 @@ Home Assistant ingress forwards to the unpublished port 8099. The Python HTTP se
 
 The browser uses same-origin, ingress-relative URLs. A small gateway maps explicit operations to `http://127.0.0.1:8080`, validates their fields, and does not forward browser authentication headers. There is no generic proxy, CLI runner, filesystem endpoint, receive consumer, CDN, or remotely generated QR image. Static assets use a restrictive CSP and backend data is inserted as text, not HTML. Mutations require a CSRF token and confirmation; duplicate operation IDs are remembered for five minutes (not durable across restart). UI request bodies are limited to 3 MiB and backend responses to 4 MiB.
 
-The service runs as UID/GID 65534, with supplementary groups cleared and no inherited Home Assistant tokens. It uses Ubuntu's Python and QR/Pillow packages, with no Node runtime or JavaScript build step. The launcher preserves upstream's entrypoint, monitors both services, exits if either dies, and terminates the JSON-RPC supervisor on shutdown. No ingress authentication code is added to the upstream REST API.
+The service runs as the rootless upstream `signal-api` user and receives no Home Assistant tokens. It uses the upstream s6 process tree, with no Node runtime or JavaScript build step. The add-on's options wrapper exports configuration and then hands control to `/init`; the web UI is an additional s6 longrun service. No ingress authentication code is added to the upstream REST API.
 
 ## Feature review
 
-Reviewed against [signal-cli-rest-api 0.100](https://github.com/bbernhard/signal-cli-rest-api/blob/0.100/src/api/api.go), its [client implementation](https://github.com/bbernhard/signal-cli-rest-api/blob/0.100/src/client/client.go), [signal-cli 0.14.5 commands](https://github.com/AsamK/signal-cli/blob/v0.14.5/man/signal-cli.1.adoc), and the [companion integration](https://github.com/haberda/signal-integration).
+Reviewed against [signal-cli-rest-api 0.101](https://github.com/bbernhard/signal-cli-rest-api/blob/0.101/src/api/api.go), its [client implementation](https://github.com/bbernhard/signal-cli-rest-api/blob/0.101/src/client/client.go), [signal-cli 0.14.8 commands](https://github.com/AsamK/signal-cli/blob/v0.14.8/man/signal-cli.1.adoc), and the [companion integration](https://github.com/haberda/signal-integration).
 
 | Area                   | Web UI coverage                                                                                                           |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------- |

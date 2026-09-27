@@ -52,4 +52,6 @@ else
 
 fi
 
-exec python3 /opt/signal-webui/launcher.py
+# Keep the upstream s6-overlay init as PID 1 so API and JSON-RPC services
+# retain their native lifecycle behavior.
+exec /init
