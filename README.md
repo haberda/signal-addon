@@ -11,8 +11,6 @@ This is the development repository for the Home Assistant add-on packaging [Sign
 - [Production add-on repository](https://github.com/haberda/hassio_addons)
 - [Companion Signal Messenger REST integration](https://github.com/haberda/signal-integration)
 
-User-facing instructions are maintained in the `signal/` directory and published with the add-on. This landing page links to them rather than duplicating them.
-
 The upstream REST API is developed by [bbernhard and contributors](https://github.com/bbernhard/signal-cli-rest-api); this project packages it for Home Assistant.
 
 ## AI assistance

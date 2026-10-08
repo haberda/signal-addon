@@ -35,10 +35,10 @@ The UI manages Signal state through `http://127.0.0.1:8080`; it does not launch 
 
 - Profile updates in upstream 0.101 remove the existing avatar if no image is supplied. The UI requires either an avatar upload or explicit approval to remove it.
 - Upstream 0.101 omits a zero group-expiration value from its JSON-RPC update payload. The UI blocks that ambiguous operation in JSON-RPC modes: disable the timer using your phone or temporarily use normal/native mode instead.
-- Current values for some settings are not available from the REST API. Optional fields left blank preserve upstream settings rather than assuming defaults.
+- Current values for some settings are not available from the REST API. Leaving optional fields blank preserves upstream settings.
 - CLI-only operations such as phone-number changes, arbitrary group invite-link joining, group ban/unban and link reset, device renaming, and contact block/unblock are not exposed. A second CLI process could contend with the running backend's account storage. Prefer your Signal client until upstream REST support exists.
 - Account deletion, local-data deletion, and blanket identity trust are deliberately not exposed.
-- This is an administrative surface: anyone who can open its ingress page can manage the backend's Signal accounts. Do not treat the integration's sender allowlists as web UI access control.
+- Anyone who can open the UI's ingress page can manage the backend's Signal accounts. Do not treat the integration's sender allowlists as web UI access control.
 
 ## Home Assistant integration
 
@@ -89,7 +89,7 @@ The companion integration's sender/group allowlists control which incoming messa
 
 ### Mode
 
-This option allows you to set the MODE environment variable. This replaces the Use Native variable and adds an additional mode.
+Sets the MODE environment variable, which replaces the former Use Native variable and adds another mode.
 
 Valid options:
 
@@ -107,14 +107,14 @@ Valid options:
 - `false`: Disable Auto receive
 - `true`: Enable Auto receive (default)
 
-### Default Signal Text Mode
+### Default Signal text mode
 
-Sets the default text mode for outbound messages. Only comes into play, if `text_mode` is not set for an individual message as part of the request payload.
+Sets the default text mode for outbound messages when the request payload does not specify `text_mode` for an individual message.
 
 - `normal`: no formatting options
 - `styled`: renders `*italic*`, `**bold**`, `~strikethrough~`
 
-### Log Level
+### Log level
 
 Controls the upstream REST API log verbosity.
 
@@ -123,11 +123,11 @@ Controls the upstream REST API log verbosity.
 - `warn`: warnings and errors only
 - `error`: errors only
 
-### JSON-RPC Settings
+### JSON-RPC settings
 
 These options apply only to `json-rpc` and `json-rpc-native` modes.
 
-#### Trust New Identities
+#### Trust new identities
 
 Controls how Signal identity keys are trusted when they are first encountered.
 
@@ -135,30 +135,28 @@ Controls how Signal identity keys are trusted when they are first encountered.
 - `always`: automatically trust new or changed identities
 - `never`: do not automatically trust identities
 
-#### Ignore Downloaded Media
+#### Ignore downloaded media
 
-When enabled, the associated media type is not automatically downloaded when receiving messages. All options default to `false`.
+Enable an option to skip downloading that media type when receiving messages. All options default to `false`.
 
 - Ignore attachments
 - Ignore stories
 - Ignore avatars
 - Ignore stickers
 
-### SIGNAL-CLI Command Timeout
+### SIGNAL-CLI command timeout
 
-This option sets the time in seconds to wait before timing out the signal cli command. This option does not apply to `json-rpc` or `json-rpc-native` mode and will be ignored in those modes. (default: 60s)
+Sets the timeout in seconds for the signal cli command (default: 60s). The option is ignored in `json-rpc` and `json-rpc-native` modes.
 
 ## Versioning
 
-This add-on follows the versioning of the upstream container. There is very little difference between this add-on and the container found [here](https://github.com/bbernhard/signal-cli-rest-api).
-As of this writing the upstream container versioning uses the 0.xx pattern for releases. This add-on follows the same pattern, but uses 0.xx.y where y indicates a change from the upstream that is related to Home Assistant add-on specific changes.
+This add-on closely follows the [upstream container](https://github.com/bbernhard/signal-cli-rest-api) and its 0.xx release numbering. Add-on versions use 0.xx.y, where y identifies changes specific to the Home Assistant add-on.
 
-## Differences with the Upstream
+## Differences from upstream
 
-The primary difference between this add-on and the upstream is the location of persistent storage. Signal CLI data is stored in `/config` through the `SIGNAL_CLI_CONFIG_DIR` environment variable, rather than upstream's default `/home/.local/share/signal-cli`. The add-on reads its Home Assistant configuration options separately from `/data/options.json`.
-There is also a script that runs to allow for setting the above option(s).
+The main difference from upstream is the location of persistent storage. Signal CLI data is stored in `/config` through the `SIGNAL_CLI_CONFIG_DIR` environment variable, rather than upstream's default `/home/.local/share/signal-cli`. The add-on reads its Home Assistant configuration options separately from `/data/options.json`.
+A script applies these options.
 
-## Bug Reporting
+## Bug reporting
 
-Bug reports can be filed either with the [add-on repository](https://github.com/haberda/hassio_addons), or with the [upstream repository](https://github.com/bbernhard/signal-cli-rest-api).
-Please attempt to determine if your bug is related to add-on specific issues, or application issues before filing your report. Add-on specific issues should be submitted to the add-on repository, application specific issues should be filed with the upstream repository.
+Before filing a report, try to determine whether the bug comes from the add-on or the upstream application. Report add-on issues in the [add-on repository](https://github.com/haberda/hassio_addons) and application issues in the [upstream repository](https://github.com/bbernhard/signal-cli-rest-api).
