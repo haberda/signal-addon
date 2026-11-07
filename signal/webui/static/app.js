@@ -315,7 +315,7 @@ function overview() {
   const grid = el("div", undefined, "grid");
   main.append(grid);
   const backend = card(grid, "REST backend", "Connectivity does not establish Signal network health.");
-  backend.append(el("div", state.healthy ? "Healthy" : state.about ? "Connected" : "Unavailable", "metric"));
+  backend.append(el("div", state.about ? "Connected" : "Unavailable", "metric"));
   if (state.about)
     values(backend, {
       mode: state.about.mode,
