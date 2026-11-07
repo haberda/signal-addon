@@ -25,6 +25,11 @@ RUN chmod 755 /etc/cont-init.d/00-signal-options \
 
 ENTRYPOINT ["/init"]
 
+# Supervisor restarts an unhealthy add-on when its Watchdog switch is on.
+# JSON-RPC modes start slowly, so allow a generous start period.
+HEALTHCHECK --interval=60s --timeout=10s --start-period=180s --retries=3 \
+    CMD ["curl", "--fail", "--silent", "--max-time", "8", "http://127.0.0.1:8080/v1/health"]
+
 VOLUME ["/config"]
 
 # Build arguments

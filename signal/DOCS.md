@@ -158,7 +158,7 @@ Sets the timeout in seconds for the signal cli command (default: 60s). The optio
 
 ## Health checks and backups
 
-Supervisor's watchdog polls the REST API's `/v1/health` endpoint and restarts the add-on if it stops responding. The web UI's Overview page shows the same health check.
+A Docker health check polls the REST API's `/v1/health` endpoint every minute. If the add-on's **Watchdog** switch is on, Supervisor restarts the add-on when the check keeps failing. The web UI's Overview page shows the same health check.
 
 Backups include the Signal account data in `/config`. Downloaded attachments, avatars and stickers are left out to keep backups small. Signal servers keep attachments only for a limited time, so a restored backup won't include older attachments.
 

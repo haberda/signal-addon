@@ -11,7 +11,6 @@ startup: services
 init: false
 ingress: true
 panel_icon: mdi:message-lock
-watchdog: http://[HOST]:[PORT:8080]/v1/health
 ports:
   8080/tcp: 8080
 ports_description:
