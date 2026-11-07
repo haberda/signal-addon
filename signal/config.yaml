@@ -11,6 +11,7 @@ startup: services
 init: false
 ingress: true
 panel_icon: mdi:message-lock
+watchdog: http://[HOST]:[PORT:8080]/v1/health
 ports:
   8080/tcp: 8080
 ports_description:
@@ -18,7 +19,8 @@ ports_description:
 options:
   mode: normal
   WEBUI_ENABLED: true
-  AUTO_RECEIVE: true
+  AUTO_RECEIVE: false
+  AUTO_RECEIVE_SCHEDULE: "0 22 * * *"
   SIGNAL_CLI_CMD_TIMEOUT: 60
   DEFAULT_SIGNAL_TEXT_MODE: normal
   LOG_LEVEL: info
@@ -33,6 +35,7 @@ schema:
   mode: list(normal|native|json-rpc|json-rpc-native)
   WEBUI_ENABLED: bool
   AUTO_RECEIVE: bool
+  AUTO_RECEIVE_SCHEDULE: match(^\S+( \S+){4}$)
   SIGNAL_CLI_CMD_TIMEOUT: int
   DEFAULT_SIGNAL_TEXT_MODE: list(normal|styled)
   LOG_LEVEL: list(debug|info|warn|error)
@@ -41,6 +44,11 @@ schema:
   JSON_RPC_IGNORE_STORIES: bool
   JSON_RPC_IGNORE_AVATARS: bool
   JSON_RPC_IGNORE_STICKERS: bool
+  RECEIVE_WEBHOOK_URL: url?
+backup_exclude:
+  - "*/attachments/*"
+  - "*/avatars/*"
+  - "*/stickers/*"
 environment:
   SIGNAL_CLI_CONFIG_DIR: /config
 image: ghcr.io/haberda/signal/{arch}
