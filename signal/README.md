@@ -14,7 +14,7 @@ You can also select **Open Web UI** on the add-on to link an account, manage gro
 
 The companion integration provides UI-based setup, notification entities, incoming-message automation events, reactions, alert acknowledgements, and optional Assist conversations. See the [setup and configuration guide](DOCS.md) for installation details and receiving permissions.
 
-If you enable integration receiving in `normal` or `native` mode, disable the add-on's `AUTO_RECEIVE` option to avoid competing receivers.
+`AUTO_RECEIVE` is off by default so it doesn't compete with integration receiving in `normal` or `native` mode. Turn it on only for send-only setups.
 
 ## Documentation and security
 

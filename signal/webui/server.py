@@ -8,6 +8,7 @@ import base64
 import hashlib
 import io
 import json
+import os
 import re
 import secrets
 import threading
@@ -24,6 +25,11 @@ INGRESS_PEER = "172.30.32.2"
 MAX_BODY = 3 * 1024 * 1024
 MAX_RESPONSE = 4 * 1024 * 1024
 STATIC = Path(__file__).parent / "static"
+DISABLED_PAGE = (
+    b"<!doctype html><html lang=en><meta charset=utf-8><title>Signal Web UI disabled</title>"
+    b"<p>The Signal management web UI is disabled by the add-on's WEBUI_ENABLED option. "
+    b"The REST API is still running. Enable the option and restart the add-on to use this page.</p></html>"
+)
 
 
 class Invalid(ValueError):
@@ -121,6 +127,7 @@ GROUP = {
 # action: method, fixed route, payload schema, required fields
 ROUTES = {
     "about": ("GET", "/v1/about", {}, ()),
+    "health": ("GET", "/v1/health", {}, ()),
     "accounts": ("GET", "/v1/accounts", {}, ()),
     "groups": ("GET", "/v1/groups/{account}", {}, ()),
     "group": ("GET", "/v1/groups/{account}/{group}", {}, ()),
@@ -499,6 +506,9 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
     def do_GET(self):
+        if not self.server.enabled:
+            self.respond(503, DISABLED_PAGE, "text/html; charset=utf-8")
+            return
         path = urlsplit(self.path).path or "/"
         if path == "/session":
             self.respond(200, {"token": self.server.gateway.token})
@@ -522,6 +532,9 @@ class Handler(BaseHTTPRequestHandler):
         self.respond(200, body, content_type)
 
     def do_POST(self):
+        if not self.server.enabled:
+            self.respond(503, {"error": "The web UI is disabled by WEBUI_ENABLED"})
+            return
         if self.path != "/api/action":
             self.respond(404, {"error": "Not found"})
             return
@@ -570,7 +583,8 @@ class Handler(BaseHTTPRequestHandler):
 class Server(ThreadingHTTPServer):
     daemon_threads = True
 
-    def __init__(self, address):
+    def __init__(self, address, enabled=True):
+        self.enabled = enabled
         self.gateway = Gateway()
         self.slots = threading.BoundedSemaphore(8)
         super().__init__(address, Handler)
@@ -600,4 +614,5 @@ class Server(ThreadingHTTPServer):
 
 
 if __name__ == "__main__":
-    Server(("0.0.0.0", 8099)).serve_forever()
+    enabled = os.environ.get("WEBUI_ENABLED", "true") == "true"
+    Server(("0.0.0.0", 8099), enabled).serve_forever()

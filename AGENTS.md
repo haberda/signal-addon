@@ -82,6 +82,11 @@ Keep the repository `README.md`, `signal/README.md`, `signal/DOCS.md`, and
 `signal/webui/README.md` consistent when user-facing behavior changes. Document
 security implications, ingress-only access, and rootless ownership changes.
 
+If the humanizer skill is installed, use it on all documentation files you
+write or change (READMEs, `DOCS.md`, `AGENTS.md`, option translations) and on
+console output the add-on prints, such as log and startup messages in the
+s6 scripts and Web UI service.
+
 Use focused commit messages in the form `type: short imperative summary`, for
 example `fix: preserve explicit false add-on options`. Avoid committing build
 artifacts, virtual environments, browser downloads, or local configuration.

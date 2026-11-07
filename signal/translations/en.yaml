@@ -1,0 +1,57 @@
+---
+configuration:
+  mode:
+    name: Mode
+    description: >-
+      How the REST API runs signal-cli. json-rpc and json-rpc-native keep one
+      process running and are recommended for continuous receiving.
+  WEBUI_ENABLED:
+    name: Web UI
+    description: >-
+      Serve the management web UI through Home Assistant ingress. When off, the
+      REST API keeps running and Open Web UI shows a notice.
+  AUTO_RECEIVE:
+    name: Auto receive
+    description: >-
+      Normal and native modes only. Periodically receive messages when no other
+      client does. Leave off when the companion integration receives messages.
+  AUTO_RECEIVE_SCHEDULE:
+    name: Auto receive schedule
+    description: >-
+      Cron schedule with five fields used when Auto receive is on. The default
+      runs once a day at 22:00.
+  SIGNAL_CLI_CMD_TIMEOUT:
+    name: signal-cli command timeout
+    description: >-
+      Normal and native modes only. Seconds to wait for each signal-cli
+      command. Set 0 to use the upstream default.
+  DEFAULT_SIGNAL_TEXT_MODE:
+    name: Default text mode
+    description: >-
+      Text mode for outgoing messages that do not set one. styled renders
+      *italic*, **bold** and ~strikethrough~.
+  LOG_LEVEL:
+    name: Log level
+    description: REST API log verbosity. Avoid debug when handling sensitive data.
+  JSON_RPC_TRUST_NEW_IDENTITIES:
+    name: Trust new identities
+    description: JSON-RPC modes only. How identity keys are trusted when first seen or changed.
+  JSON_RPC_IGNORE_ATTACHMENTS:
+    name: Ignore attachments
+    description: JSON-RPC modes only. Do not download attachments when receiving.
+  JSON_RPC_IGNORE_STORIES:
+    name: Ignore stories
+    description: JSON-RPC modes only. Do not receive stories.
+  JSON_RPC_IGNORE_AVATARS:
+    name: Ignore avatars
+    description: JSON-RPC modes only. Do not download avatars when receiving.
+  JSON_RPC_IGNORE_STICKERS:
+    name: Ignore stickers
+    description: JSON-RPC modes only. Do not download stickers when receiving.
+  RECEIVE_WEBHOOK_URL:
+    name: Receive webhook URL
+    description: >-
+      JSON-RPC modes only. Optional URL that receives each incoming message as
+      an HTTP POST, such as a Home Assistant webhook trigger.
+network:
+  8080/tcp: REST API port. The API has no authentication; do not expose it to the internet.

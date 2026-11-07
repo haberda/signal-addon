@@ -86,6 +86,7 @@ class BrowserTests(unittest.TestCase):
             origin = f"http://127.0.0.1:{server.server_port}"
             page.goto(origin + PREFIX + "/")
             page.wait_for_selector("text=Connected")
+            page.wait_for_selector("dd:text-is('Passing')")
             self.assertEqual(page.locator("html").get_attribute("data-theme"), "dark")
             page.get_by_role("button", name="Switch to light theme", exact=True).click()
             self.assertEqual(page.locator("html").get_attribute("data-theme"), "light")

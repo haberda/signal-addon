@@ -2,10 +2,10 @@
 
 . /run/signal-addon/options.env
 
+# Ingress cannot be withdrawn at runtime, so a disabled UI still answers
+# ingress requests with a short notice instead of failing with a 502.
 if [ "${WEBUI_ENABLED:-true}" != "true" ]; then
-	# Keep the longrun service healthy while the UI is disabled.
 	echo "Signal Web UI is disabled by WEBUI_ENABLED"
-	exec s6-setuidgid signal-api sleep infinity
 fi
 
 exec s6-setuidgid signal-api python3 /opt/signal-webui/server.py

@@ -1,7 +1,7 @@
 "use strict";
 
 const $ = (selector) => document.querySelector(selector);
-const state = { token: "", accounts: [], account: "", about: null, groups: [], busy: false, qrTimer: null };
+const state = { token: "", accounts: [], account: "", about: null, healthy: false, groups: [], busy: false, qrTimer: null };
 // Resolve relative to the ingress directory; never fetch the HA root /api.
 const base = new URL(location.pathname.endsWith("/") ? location.pathname : `${location.pathname}/`, location.origin);
 const el = (tag, text, className) => {
@@ -277,6 +277,14 @@ function form(parent, title, description, action, definitions, options = {}) {
   return panel;
 }
 
+async function checkHealth() {
+  try {
+    await api("health");
+    return true;
+  } catch {
+    return false;
+  }
+}
 async function refreshAccounts() {
   const accounts = await api("accounts");
   if (!Array.isArray(accounts) || !accounts.every((item) => typeof item === "string")) throw new Error("Backend returned an invalid account list.");
@@ -308,7 +316,12 @@ function overview() {
   main.append(grid);
   const backend = card(grid, "REST backend", "Connectivity does not establish Signal network health.");
   backend.append(el("div", state.about ? "Connected" : "Unavailable", "metric"));
-  if (state.about) values(backend, { mode: state.about.mode, version: state.about.version || state.about.build || "See upstream /about" });
+  if (state.about)
+    values(backend, {
+      mode: state.about.mode,
+      version: state.about.version || state.about.build || "See upstream /about",
+      health_check: state.healthy ? "Passing" : "Failing",
+    });
   card(grid, "Linked accounts", "Select an account in the header before making changes.").append(el("div", String(state.accounts.length), "metric"));
   const next = card(main, "A simple setup path", "1. Link or register an account. 2. Select it above. 3. Send a test message. 4. Manage contacts and groups.");
   next.append(Object.assign(el("a", "Link an account →"), { href: "#onboarding" }));
@@ -629,6 +642,7 @@ $("#account").onchange = () =>
 $("#refresh").onclick = () =>
   run(async () => {
     state.about = await api("about");
+    state.healthy = await checkHealth();
     await refreshAccounts();
     await render();
     notice("Status refreshed.");
@@ -639,6 +653,7 @@ run(async () => {
     if (!response.ok) throw new Error("Open this page through Home Assistant ingress.");
     state.token = (await response.json()).token;
     state.about = await api("about");
+    state.healthy = await checkHealth();
     await refreshAccounts();
   } catch (error) {
     notice(error.message, true);

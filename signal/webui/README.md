@@ -8,19 +8,21 @@ The browser uses same-origin, ingress-relative URLs. A small gateway maps explic
 
 The container's s6 init reads Supervisor's root-readable `/data/options.json` during initialization and prepares the runtime environment. The API and web UI processes run as the rootless upstream `signal-api` UID/GID 1000. The add-on uses the upstream s6 process tree, with an additional s6 longrun service for the web UI. It has no Node runtime or JavaScript build step. No ingress authentication code is added to the upstream REST API.
 
+When `WEBUI_ENABLED` is `false`, the same service still listens for ingress so **Open Web UI** doesn't fail with a 502. It answers every request with a static 503 notice, issues no session token and never contacts the REST API.
+
 ## Feature review
 
 Reviewed against [signal-cli-rest-api 0.101](https://github.com/bbernhard/signal-cli-rest-api/blob/0.101/src/api/api.go), its [client implementation](https://github.com/bbernhard/signal-cli-rest-api/blob/0.101/src/client/client.go), [signal-cli 0.14.8 commands](https://github.com/AsamK/signal-cli/blob/v0.14.8/man/signal-cli.1.adoc), and the [companion integration](https://github.com/haberda/signal-integration).
 
-| Area                   | Web UI coverage                                                                                                           |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| Onboarding             | Local QR linking; account selection; SMS/voice registration, verification, optional CAPTCHA/PIN                           |
-| Groups                 | List/detail, create, settings/avatar/permissions/timer, members/admins, accept own invitation, leave, block               |
-| Messages               | Explicit single-destination test send, attachment, quote, edit, remote delete, reactions, create/close poll               |
-| Accounts               | Profile/avatar, username, number privacy, PIN, rate-limit challenge                                                       |
-| People/devices         | Contacts and timers, contact sync, linked devices, verified identity trust                                                |
-| Not exposed by this UI | Incoming inbox, account/data deletion, blanket trust, arbitrary proxy or command execution                                |
-| CLI features deferred  | Number changes, arbitrary invite-link joining, group ban/unban/link reset, device rename, contact block/unblock, payments |
+| Area                   | Web UI coverage                                                                                                                                |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Onboarding             | Backend mode, version and `/v1/health` status; local QR linking; account selection; SMS/voice registration, verification, optional CAPTCHA/PIN |
+| Groups                 | List/detail, create, settings/avatar/permissions/timer, members/admins, accept own invitation, leave, block                                    |
+| Messages               | Explicit single-destination test send, attachment, quote, edit, remote delete, reactions, create/close poll                                    |
+| Accounts               | Profile/avatar, username, number privacy, PIN, rate-limit challenge                                                                            |
+| People/devices         | Contacts and timers, contact sync, linked devices, verified identity trust                                                                     |
+| Not exposed by this UI | Incoming inbox, account/data deletion, blanket trust, arbitrary proxy or command execution                                                     |
+| CLI features deferred  | Number changes, arbitrary invite-link joining, group ban/unban/link reset, device rename, contact block/unblock, payments                      |
 
 The UI adds management features absent from the companion integration while sharing its backend and account storage. It exposes a subset of CLI features and does not emulate unsupported REST operations through direct CLI execution. Configure Assist and Home Assistant automations in the integration.
 

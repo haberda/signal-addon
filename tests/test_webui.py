@@ -262,8 +262,8 @@ class LocalServer(web.Server):
 
 
 @contextmanager
-def running_server(server_class=LocalServer):
-    server = server_class(("127.0.0.1", 0))
+def running_server(server_class=LocalServer, enabled=True):
+    server = server_class(("127.0.0.1", 0), enabled)
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
     try:
@@ -279,6 +279,23 @@ class HTTPTests(unittest.TestCase):
         self.assertTrue(web.Server.verify_request(None, None, ("172.30.32.2", 1)))
         for peer in ("127.0.0.1", "172.30.32.3", "192.168.1.2", "::1"):
             self.assertFalse(web.Server.verify_request(None, None, (peer, 1)))
+
+    def test_disabled_ui_answers_ingress_without_backend_access(self):
+        with running_server(enabled=False) as server, patch.object(
+            web, "upstream"
+        ) as upstream:
+            for method, path in (("GET", "/"), ("GET", "/session"), ("POST", "/api/action")):
+                with self.subTest(path=path):
+                    connection = http.client.HTTPConnection(
+                        *server.server_address, timeout=5
+                    )
+                    connection.request(method, path, body=b"{}")
+                    response = connection.getresponse()
+                    body = response.read()
+                    connection.close()
+                    self.assertEqual(response.status, 503)
+                    self.assertNotIn(b"token", body)
+            upstream.assert_not_called()
 
     def test_http_security_and_ingress_assets(self):
         with running_server() as server:

@@ -1,6 +1,7 @@
 #!/command/with-contenv sh
 . /run/signal-addon/options.env
 if [ "${MODE}" != "json-rpc" ] && [ "${MODE}" != "json-rpc-native" ]; then
-	exec sleep infinity
+	echo "Running in $MODE mode; JSON-RPC daemon not needed"
+	exec s6-setuidgid signal-api sleep infinity
 fi
 exec s6-setuidgid signal-api jsonrpc2-helper

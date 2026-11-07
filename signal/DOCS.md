@@ -13,7 +13,7 @@ This add-on provides the Signal REST API backend for sending and receiving messa
 
 Select **Open Web UI** on the add-on's page in Home Assistant. The interface is served only through Home Assistant ingress: port 8099 is not published, and the UI accepts connections only from the ingress gateway. No separate UI password, browser extension, or external website is required. Dark mode is the default; the theme switch supports light mode and saves only that preference in your browser.
 
-The `WEBUI_ENABLED` option controls whether the management interface starts. It defaults to `true`. Set it to `false` if you do not want the web UI; the Signal REST API continues to run for other clients, but **Open Web UI** will be unavailable after the add-on restarts.
+The `WEBUI_ENABLED` option controls whether the management interface starts. It defaults to `true`. Set it to `false` if you do not want the web UI. After the add-on restarts, the Signal REST API keeps running for other clients. Home Assistant still shows **Open Web UI**, because ingress can't be switched off at runtime, but the page only says the UI is disabled. It makes no backend requests.
 
 The rootless runtime reads Supervisor's protected `/data/options.json` during s6 initialization. The API, JSON-RPC helper, and web UI then run as the upstream `signal-api` UID/GID 1000, with persisted Signal state stored in `/config`.
 
@@ -59,7 +59,7 @@ On Home Assistant OS/Supervised, discovery uses the add-on's internal hostname a
 
 - `json-rpc` and `json-rpc-native` use a WebSocket connection. The add-on's `AUTO_RECEIVE` setting is ignored in these modes.
 - `normal` and `native` use polling. When integration receiving is enabled, set `AUTO_RECEIVE: false` and stop other receive sensors or helper receivers for the same account. Competing receivers can consume messages before the integration sees them.
-- For send-only `normal` or `native` deployments, keep periodic auto receive enabled as recommended upstream.
+- For send-only `normal` or `native` deployments, turn on `AUTO_RECEIVE` as recommended upstream. It is off by default because the companion integration usually receives messages itself.
 - An empty incoming sender allowlist permits no incoming message events. Group messages require both an allowed sender and an allowed group.
 - Assist has separate permissions; authorizing message events does not automatically authorize Assist commands.
 
@@ -100,12 +100,16 @@ Valid options:
 
 ### Auto receive
 
-Upstream recommends periodic receiving when no other receiver is running. Disable this option when the companion integration or another client receives messages in `normal` or `native` mode. See the [upstream guidance](https://github.com/bbernhard/signal-cli-rest-api#auto-receive-schedule) for details. This option is ignored in `json-rpc` and `json-rpc-native` modes.
+Upstream recommends periodic receiving when no other receiver is running. Leave this option off when the companion integration or another client receives messages in `normal` or `native` mode. See the [upstream guidance](https://github.com/bbernhard/signal-cli-rest-api#auto-receive-schedule) for details. This option is ignored in `json-rpc` and `json-rpc-native` modes.
 
 Valid options:
 
-- `false`: Disable Auto receive
-- `true`: Enable Auto receive (default)
+- `false`: Disable Auto receive (default for new installs; existing installs keep their saved value)
+- `true`: Enable Auto receive
+
+### Auto receive schedule
+
+The cron schedule used when Auto receive is on. It takes five fields (minute, hour, day of month, month, day of week). The default `0 22 * * *` receives once a day at 22:00. Use `*/15 * * * *` to receive every 15 minutes.
 
 ### Default Signal text mode
 
@@ -144,9 +148,19 @@ Enable an option to skip downloading that media type when receiving messages. Al
 - Ignore avatars
 - Ignore stickers
 
+#### Receive webhook URL
+
+Optional. When set, upstream sends each received message as an HTTP POST to this URL, for example a Home Assistant [webhook trigger](https://www.home-assistant.io/docs/automation/trigger/#webhook-trigger). Leave it empty if you use the companion integration, and test receiving before you rely on both together. The URL can contain a webhook secret, so the add-on leaves it out of its debug log.
+
 ### SIGNAL-CLI command timeout
 
 Sets the timeout in seconds for the signal cli command (default: 60s). The option is ignored in `json-rpc` and `json-rpc-native` modes.
+
+## Health checks and backups
+
+A Docker health check polls the REST API's `/v1/health` endpoint every minute. If the add-on's **Watchdog** switch is on, Supervisor restarts the add-on when the check keeps failing. The web UI's Overview page shows the same health check.
+
+Backups include the Signal account data in `/config`. Downloaded attachments, avatars and stickers are left out to keep backups small. Signal servers keep attachments only for a limited time, so a restored backup won't include older attachments.
 
 ## Versioning
 
