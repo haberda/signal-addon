@@ -83,6 +83,14 @@ class ContractTests(unittest.TestCase):
                 method = web.prepare(request(action, data, params))[1]
                 self.assertEqual(method, web.ROUTES[action][0])
 
+    def test_numberless_account_aci_is_accepted(self):
+        aci = "22222222-2222-4222-8222-222222222222"
+        path = web.prepare(request("contacts", {}, {"account": aci}))[2]
+        self.assertEqual(path, f"/v1/contacts/{aci}")
+        for bad in ("2222", "+0123", "22222222-2222-4222-8222-22222222222Z", "+1555 867"):
+            with self.subTest(bad=bad), self.assertRaises(web.Invalid):
+                web.prepare(request("contacts", {}, {"account": bad}))
+
     def test_no_receive_or_arbitrary_proxy(self):
         for action in (
             "receive",

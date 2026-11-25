@@ -7,7 +7,7 @@ COPY webui /opt/signal-webui
 COPY webui-service /etc/s6-overlay/s6-rc.d/signal-webui
 COPY s6-services /etc/s6-overlay/s6-rc.d
 
-# The upstream 0.101 image is rootless and sets USER signal-api in its final
+# The upstream image is rootless and sets USER signal-api in its final
 # stage. Package installation still needs root; runtime services stay unprivileged.
 # s6-overlay must be PID 1. The cont-init script reads Supervisor's protected
 # options file as root, while each service drops to the rootless signal-api user.

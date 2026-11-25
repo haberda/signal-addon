@@ -1,7 +1,7 @@
 """Ingress-only UI and explicit, validated operations against the loopback API.
 
 No generic proxy, CLI execution, receive consumer, or filesystem API is exposed.
-Contracts: signal-cli-rest-api 0.101 / signal-cli 0.14.8.
+Contracts: signal-cli-rest-api 0.102 / signal-cli 0.14.10.
 """
 
 import base64
@@ -22,6 +22,10 @@ from urllib.request import HTTPRedirectHandler, ProxyHandler, Request, build_ope
 
 UPSTREAM = "http://127.0.0.1:8080"
 INGRESS_PEER = "172.30.32.2"
+# A phone number, or the ACI (UUID) of a numberless account (0.102+).
+ACCOUNT_ID = re.compile(
+    r"\+[1-9][0-9]{3,14}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+)
 MAX_BODY = 3 * 1024 * 1024
 MAX_RESPONSE = 4 * 1024 * 1024
 STATIC = Path(__file__).parent / "static"
@@ -318,10 +322,10 @@ def prepare(request):
     if not isinstance(params, dict) or set(params) != expected:
         raise Invalid("Invalid operation identifiers")
     safe = {key: segment(value) for key, value in params.items()}
-    if "account" in params and not re.fullmatch(
-        r"\+[1-9][0-9]{3,14}", params["account"]
-    ):
-        raise Invalid("Use an international account number, such as +XXXXXXXXXXX")
+    if "account" in params and not ACCOUNT_ID.fullmatch(params["account"]):
+        raise Invalid(
+            "Use an international account number, such as +XXXXXXXXXXX, or an account ACI"
+        )
     if "group" in params and not params["group"].startswith("group."):
         raise Invalid("Select a REST group ID (group.…)")
     if "device" in params and (
@@ -445,12 +449,12 @@ class Gateway:
                     raise Invalid("Operation ID already used")
                 return result
             try:
-                # 0.101 drops a zero timer from its JSON-RPC updateGroup payload.
+                # Upstream (through 0.102) drops a zero timer from its JSON-RPC updateGroup payload.
                 if action == "update_group" and data.get("expiration_time") == 0:
                     about = upstream("GET", "/v1/about", None)
                     if about.get("mode") in ("json-rpc", "json-rpc-native"):
                         raise BackendError(
-                            "Upstream 0.101 cannot reliably disable group timers in JSON-RPC mode. Use your Signal phone or temporarily switch to normal/native mode."
+                            "Upstream cannot reliably disable group timers in JSON-RPC mode. Use your Signal phone or temporarily switch to normal/native mode."
                         )
                 result = upstream(method, path, data)
                 if action == "link":

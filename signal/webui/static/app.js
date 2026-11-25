@@ -286,8 +286,11 @@ async function checkHealth() {
   }
 }
 async function refreshAccounts() {
-  const accounts = await api("accounts");
-  if (!Array.isArray(accounts) || !accounts.every((item) => typeof item === "string")) throw new Error("Backend returned an invalid account list.");
+  const raw = await api("accounts");
+  // 0.102 returns {number, aci} objects; number is empty for numberless accounts.
+  const id = (item) => (typeof item === "string" ? item : item && typeof item === "object" ? item.number || item.aci : null);
+  const accounts = Array.isArray(raw) ? raw.map(id) : null;
+  if (!accounts || !accounts.every((item) => typeof item === "string" && item)) throw new Error("Backend returned an invalid account list.");
   state.accounts = accounts;
   if (!accounts.includes(state.account)) state.account = accounts[0] || "";
   const select = $("#account");

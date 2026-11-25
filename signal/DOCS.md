@@ -33,8 +33,8 @@ Every mutation requires review and confirmation. Failed or timed-out requests ar
 
 The UI manages Signal state through `http://127.0.0.1:8080`; it does not launch another `signal-cli` process, edit Home Assistant integration settings, or change add-on configuration. The existing REST API port remains separate for integration clients and is not protected by ingress authentication. The UI does not poll or subscribe to incoming messages, so it cannot consume messages intended for the integration.
 
-- Profile updates in upstream 0.101 remove the existing avatar if no image is supplied. The UI requires either an avatar upload or explicit approval to remove it.
-- Upstream 0.101 omits a zero group-expiration value from its JSON-RPC update payload. The UI blocks that ambiguous operation in JSON-RPC modes: disable the timer using your phone or temporarily use normal/native mode instead.
+- Upstream profile updates remove the existing avatar if no image is supplied. The UI requires either an avatar upload or explicit approval to remove it.
+- Upstream omits a zero group-expiration value from its JSON-RPC update payload. The UI blocks that ambiguous operation in JSON-RPC modes: disable the timer using your phone or temporarily use normal/native mode instead.
 - Current values for some settings are not available from the REST API. Leaving optional fields blank preserves upstream settings.
 - CLI-only operations such as phone-number changes, arbitrary group invite-link joining, group ban/unban and link reset, device renaming, and contact block/unblock are not exposed. A second CLI process could contend with the running backend's account storage. Prefer your Signal client until upstream REST support exists.
 - Account deletion, local-data deletion, and blanket identity trust are deliberately not exposed.
@@ -138,6 +138,13 @@ Controls how Signal identity keys are trusted when they are first encountered.
 - `on-first-use`: trust the first identity seen for a recipient (default)
 - `always`: automatically trust new or changed identities
 - `never`: do not automatically trust identities
+
+#### Receive mode
+
+Controls when signal-cli fetches incoming messages from Signal's servers.
+
+- `on-start`: receive all the time (default). Messages that arrive while no websocket client is connected, for example while Home Assistant restarts, are dropped.
+- `manual`: receive only while at least one websocket client, such as the companion integration, is connected. Messages that arrive in between stay queued on Signal's servers, under Signal's normal retention rules, and are delivered when a client reconnects. Don't use `manual` with only the receive webhook below: without a websocket client, nothing is received.
 
 #### Ignore downloaded media
 

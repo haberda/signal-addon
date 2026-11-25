@@ -19,7 +19,7 @@ This repository contains a Home Assistant add-on that repackages
 
 ## Runtime architecture
 
-The upstream 0.101 image uses s6-overlay and the unprivileged `signal-api`
+The upstream image (currently 0.102) uses s6-overlay and the unprivileged `signal-api`
 user (UID/GID 1000). Keep `/init` as the container PID 1 and keep
 `init: false` in `signal/config.yaml`; Home Assistant's Docker init wrapper
 must not be inserted in front of s6.

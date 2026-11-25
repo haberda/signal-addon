@@ -42,9 +42,13 @@ class BrowserTests(unittest.TestCase):
         def backend(method, path, data):
             calls.append((method, path, data))
             if path == "/v1/about":
-                return {"mode": "json-rpc", "version": "0.101"}
+                return {"mode": "json-rpc", "version": "0.102"}
             if path == "/v1/accounts":
-                return [ACCOUNT]
+                # 0.102 account objects; the second account is numberless.
+                return [
+                    {"number": ACCOUNT, "aci": "11111111-1111-4111-8111-111111111111"},
+                    {"number": "", "aci": "22222222-2222-4222-8222-222222222222"},
+                ]
             if path.startswith("/v1/qrcodelink/raw"):
                 return {
                     "device_link_uri": "sgnl://linkdevice?uuid=example&pub_key=example"

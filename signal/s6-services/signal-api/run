@@ -1,3 +1,5 @@
 #!/command/with-contenv sh
+# options.sh writes this file at startup.
+# shellcheck source=/dev/null
 . /run/signal-addon/options.env
 exec s6-setuidgid signal-api signal-cli-rest-api -signal-cli-config="${SIGNAL_CLI_CONFIG_DIR}"

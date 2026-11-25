@@ -48,6 +48,7 @@ write_env SIGNAL_CLI_CONFIG_DIR "${SIGNAL_CLI_CONFIG_DIR:-/config}"
 
 if [ "$MODE" = "json-rpc" ] || [ "$MODE" = "json-rpc-native" ]; then
 	write_env JSON_RPC_TRUST_NEW_IDENTITIES "$(option JSON_RPC_TRUST_NEW_IDENTITIES on-first-use)"
+	write_env JSON_RPC_RECEIVE_MODE "$(option JSON_RPC_RECEIVE_MODE on-start)"
 	for media in ATTACHMENTS STORIES AVATARS STICKERS; do
 		write_env "JSON_RPC_IGNORE_$media" "$(bool_option "JSON_RPC_IGNORE_$media" false)"
 	done
