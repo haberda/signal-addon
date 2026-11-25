@@ -1,5 +1,7 @@
 #!/command/with-contenv sh
 
+# options.sh writes this file at startup.
+# shellcheck source=/dev/null
 . /run/signal-addon/options.env
 
 # Ingress cannot be withdrawn at runtime, so a disabled UI still answers

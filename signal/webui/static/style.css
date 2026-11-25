@@ -165,9 +165,15 @@ nav a[aria-current="page"] {
   color: var(--muted);
   letter-spacing: 0.3px;
 }
+.account-label {
+  min-width: 0;
+}
 .account-label select {
   display: block;
   min-width: 210px;
+  /* Numberless accounts show a 36-character ACI; never widen the page. */
+  max-width: 100%;
+  text-overflow: ellipsis;
   padding: 5px 28px 5px 0;
   border: 0;
   background: transparent;

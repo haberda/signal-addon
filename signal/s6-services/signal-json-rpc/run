@@ -1,7 +1,12 @@
 #!/command/with-contenv sh
+# options.sh writes this file at startup.
+# shellcheck source=/dev/null
 . /run/signal-addon/options.env
 if [ "${MODE}" != "json-rpc" ] && [ "${MODE}" != "json-rpc-native" ]; then
 	echo "Running in $MODE mode; JSON-RPC daemon not needed"
 	exec s6-setuidgid signal-api sleep infinity
 fi
+# Match upstream 0.102: signal-cli prints every received message to stdout
+# while websocket clients are connected, which floods the add-on log.
+exec 1>/dev/null
 exec s6-setuidgid signal-api jsonrpc2-helper

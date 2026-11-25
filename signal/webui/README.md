@@ -12,7 +12,7 @@ When `WEBUI_ENABLED` is `false`, the same service still listens for ingress so *
 
 ## Feature review
 
-Reviewed against [signal-cli-rest-api 0.101](https://github.com/bbernhard/signal-cli-rest-api/blob/0.101/src/api/api.go), its [client implementation](https://github.com/bbernhard/signal-cli-rest-api/blob/0.101/src/client/client.go), [signal-cli 0.14.8 commands](https://github.com/AsamK/signal-cli/blob/v0.14.8/man/signal-cli.1.adoc), and the [companion integration](https://github.com/haberda/signal-integration).
+Reviewed against [signal-cli-rest-api 0.102](https://github.com/bbernhard/signal-cli-rest-api/blob/0.102/src/api/api.go), its [client implementation](https://github.com/bbernhard/signal-cli-rest-api/blob/0.102/src/client/client.go), [signal-cli 0.14.10 commands](https://github.com/AsamK/signal-cli/blob/v0.14.10/man/signal-cli.1.adoc), and the [companion integration](https://github.com/haberda/signal-integration).
 
 | Area                   | Web UI coverage                                                                                                                                |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
