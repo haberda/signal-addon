@@ -91,6 +91,21 @@ class ContractTests(unittest.TestCase):
             with self.subTest(bad=bad), self.assertRaises(web.Invalid):
                 web.prepare(request("contacts", {}, {"account": bad}))
 
+    def test_captcha_link_prefix_is_stripped(self):
+        token = "signal-hcaptcha-short.abc.registration.def"
+        for action, params, extra in (
+            ("register", {"account": ACCOUNT}, {}),
+            ("challenge", {"account": ACCOUNT}, {"challenge_token": "t"}),
+        ):
+            for pasted in (token, f"signalcaptcha://{token}", f" signalcaptcha://{token}\n"):
+                with self.subTest(action=action, pasted=pasted):
+                    data = web.prepare(
+                        request(action, {"captcha": pasted, **extra}, params)
+                    )[3]
+                    self.assertEqual(data["captcha"], token)
+        with self.assertRaises(web.Invalid):
+            web.prepare(request("register", {"captcha": "signalcaptcha://"}, {"account": ACCOUNT}))
+
     def test_no_receive_or_arbitrary_proxy(self):
         for action in (
             "receive",

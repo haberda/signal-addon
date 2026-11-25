@@ -178,6 +178,23 @@ async function readFile(file, imageOnly) {
   });
 }
 
+// Signal hosts the CAPTCHA; this UI only links to it and never embeds or fetches it.
+function captchaSteps(panel, url) {
+  const steps = el("ol", undefined, "help");
+  const open = el("li", "Open ");
+  const link = el("a", "Signal’s CAPTCHA page");
+  link.href = url;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  open.append(link, " on a device with the same internet connection as Home Assistant, for example a computer on your home network.");
+  steps.append(
+    open,
+    el("li", "Solve the CAPTCHA. An “Open Signal” link appears below it."),
+    el("li", "Right-click “Open Signal” and copy the link address. It starts with signalcaptcha://."),
+    el("li", "Paste it here and submit soon; the token expires after a few minutes."),
+  );
+  panel.querySelector("form").before(steps);
+}
 function form(parent, title, description, action, definitions, options = {}) {
   const panel = card(parent, title, description);
   const formNode = el("form");
@@ -377,13 +394,16 @@ function onboarding() {
     ),
   );
   const accountField = () => f("param.account", "Phone number (international format)", "tel", true);
-  form(
-    advanced,
-    "Request verification code",
-    "Request SMS or voice verification. If Signal requires CAPTCHA, complete it externally and paste the signalcaptcha:// token. No external CAPTCHA page is embedded here.",
-    "register",
-    [accountField(), f("use_voice", "Use voice instead of SMS", "bool"), f("captcha", "CAPTCHA token, if required", "password")],
-    { params: () => ({}) },
+  captchaSteps(
+    form(
+      advanced,
+      "Request verification code",
+      "Request SMS or voice verification. Signal usually requires a CAPTCHA for registration.",
+      "register",
+      [accountField(), f("use_voice", "Use voice instead of SMS", "bool"), f("captcha", "CAPTCHA token, if required", "password")],
+      { params: () => ({}) },
+    ),
+    "https://signalcaptchas.org/registration/generate.html",
   );
   form(
     advanced,
@@ -601,10 +621,13 @@ async function security() {
   main.append(grid);
   form(grid, "Set registration PIN", "Primary accounts only. Keep the PIN securely; it is never saved by this UI.", "pin", [f("pin", "New PIN", "password", true)]);
   form(grid, "Remove registration PIN", "Removes the PIN for this account and reduces its registration protection.", "remove_pin", [], { danger: true });
-  form(main, "Resolve rate-limit challenge", "Use a challenge token returned by upstream and a CAPTCHA token obtained through Signal’s external challenge flow.", "challenge", [
-    f("challenge_token", "Challenge token", "password", true),
-    f("captcha", "CAPTCHA token", "password", true),
-  ]);
+  captchaSteps(
+    form(main, "Resolve rate-limit challenge", "Use the challenge token from the rate-limit error and a CAPTCHA token from Signal’s challenge page.", "challenge", [
+      f("challenge_token", "Challenge token", "password", true),
+      f("captcha", "CAPTCHA token", "password", true),
+    ]),
+    "https://signalcaptchas.org/challenge/generate.html",
+  );
 }
 
 const pages = { overview, onboarding, messages, groups, contacts, account: accountPage, security };

@@ -155,6 +155,13 @@ class BrowserTests(unittest.TestCase):
             page.get_by_alt_text("Signal device linking QR code").wait_for()
             page.wait_for_function("document.querySelector('.qr').naturalWidth > 0")
             page.get_by_role("button", name="I scanned it — refresh accounts").click()
+            # Inside the collapsed Advanced section, so match by CSS, not role.
+            captcha = page.locator("a", has_text="Signal’s CAPTCHA page")
+            self.assertEqual(
+                captcha.get_attribute("href"),
+                "https://signalcaptchas.org/registration/generate.html",
+            )
+            self.assertEqual(captcha.get_attribute("rel"), "noopener noreferrer")
 
             for name in (
                 "Contacts",
