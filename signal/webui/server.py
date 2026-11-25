@@ -344,6 +344,11 @@ def prepare(request):
         if ("quote_timestamp" in data) != ("quote_author" in data):
             raise Invalid("A quoted reply needs both author and timestamp")
         data.update(number=params["account"], notify_self=True)
+    if action in ("register", "challenge") and "captcha" in data:
+        # Users copy the "Open Signal" link; upstream expects the bare token.
+        data["captcha"] = data["captcha"].strip().removeprefix("signalcaptcha://")
+        if not data["captcha"]:
+            raise Invalid("Paste the CAPTCHA token")
     if action == "trust":
         data["verified_safety_number"] = re.sub(
             r"\s", "", data["verified_safety_number"]
